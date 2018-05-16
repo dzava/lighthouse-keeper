@@ -1,0 +1,120 @@
+.break-all {
+    word-break: break-all;
+}
+
+.lh2 {
+    line-height: 2rem;
+}
+
+.container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+.modal {
+    display: none;
+    justify-items: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    background-color: rgba(0, 0, 0, .7);
+}
+
+.table {
+    width: 100%;
+}
+
+.table tr:nth-child(even) {
+    background: rgba(0, 0, 0, .05);
+}
+
+.table th,
+.table td {
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.table td.tl {
+    text-align: left;
+}
+
+@media screen and (max-width: 670px) {
+    .table,
+    .table tbody,
+    .table tr,
+    .table th,
+    .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .table > thead {
+        display: none;
+    }
+
+    .table tr {
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .table td {
+        padding: .1rem;
+    }
+
+    .table td[data-label]:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: 700;
+        padding-right: 1rem;
+        color: rgba(0, 0, 0, .5);
+    }
+
+    .table td[data-label] {
+        text-align: right;
+    }
+}
+
+.gauge {
+    fill: none;
+    stroke: black;
+    stroke-width: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.gauge .gauge-bg {
+    stroke: #ccc;
+}
+
+.gauge .gauge-circle {
+    stroke: currentColor;
+}
+
+.gauge text {
+    fill: currentColor;
+    stroke: none;
+}
