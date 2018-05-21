@@ -7,11 +7,13 @@ use App\Auditing\Auditor;
 use App\Events\ReportCreatedEvent;
 use App\Events\RunFinishedEvent;
 use App\Run;
+use Dzava\Lighthouse\Exceptions\AuditFailedException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Symfony\Component\Process\Exception\ProcessTimedOutException;
 
 class RunAudit implements ShouldQueue
 {
@@ -45,6 +47,10 @@ class RunAudit implements ShouldQueue
             $reportPaths = $auditor->configureForAudit($this->audit)->audit($url);
 
             $report = $run->addReport($url, ...$reportPaths);
+        } catch (ProcessTimedOutException $e) {
+            $report = $run->addFailedReport($url, 'Timed out');
+        } catch (AuditFailedException $e) {
+            $report = $run->addFailedReport($url, $e->getOutput());
         } catch (\Exception $e) {
             $report = $run->addFailedReport($url, $e->getMessage());
         }

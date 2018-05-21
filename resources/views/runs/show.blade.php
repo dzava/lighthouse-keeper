@@ -28,26 +28,32 @@
                         <td class="break-all" data-label="Url">
                             <a class="link" href="{{ $report->url }}">{{ $report->url }}</a>
                         </td>
-                        <td data-label="Performance" class="lh2">
-                            @include('_gauge', ['percentage' => $run->performance_score, 'class' => 'w2 h2'])
-                        </td>
-                        <td data-label="P.W.A" class="lh2">
-                            @include('_gauge', ['percentage' => $run->pwa_score, 'class' => 'w2 h2'])
-                        </td>
-                        <td data-label="Accessibility" class="lh2">
-                            @include('_gauge', ['percentage' => $run->accessibility_score, 'class' => 'w2 h2'])
-                        </td>
-                        <td data-label="Best practices" class="nowrap lh2">
-                            @include('_gauge', ['percentage' => $run->best_practices_score, 'class' => 'w2 h2'])
-                        </td>
-                        <td data-label="S.E.O" class="lh2">
-                            @include('_gauge', ['percentage' => $run->seo_score, 'class' => 'w2 h2'])
-                        </td>
-                        <td class="nowrap">
-                            <a href="{{ route('reports.show', $report) }}" class="link">
-                                Open report
-                            </a>
-                        </td>
+                        @if($report->failed())
+                            <td colspan="6" class="tl dark-red b" title="{{ $report->failure_reason }}">
+                                {{ str_limit($report->failure_reason) }}
+                            </td>
+                        @else
+                            <td data-label="Performance" class="lh2">
+                                @include('_gauge', ['percentage' => $run->performance_score, 'class' => 'w2 h2'])
+                            </td>
+                            <td data-label="P.W.A" class="lh2">
+                                @include('_gauge', ['percentage' => $run->pwa_score, 'class' => 'w2 h2'])
+                            </td>
+                            <td data-label="Accessibility" class="lh2">
+                                @include('_gauge', ['percentage' => $run->accessibility_score, 'class' => 'w2 h2'])
+                            </td>
+                            <td data-label="Best practices" class="nowrap lh2">
+                                @include('_gauge', ['percentage' => $run->best_practices_score, 'class' => 'w2 h2'])
+                            </td>
+                            <td data-label="S.E.O" class="lh2">
+                                @include('_gauge', ['percentage' => $run->seo_score, 'class' => 'w2 h2'])
+                            </td>
+                            <td class="nowrap">
+                                <a href="{{ route('reports.show', $report) }}" class="link">
+                                    Open report
+                                </a>
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
                 </tbody>
