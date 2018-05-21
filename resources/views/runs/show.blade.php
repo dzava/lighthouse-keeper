@@ -4,7 +4,7 @@
     <div class="container">
         <div class="mt2 pt3 ph3 relative">
             <div class="ph3 black-50">{{ $run->reportCount }} {{ str_plural('report', $run->reportCount) }} for</div>
-            <div class="ph3 f3 break-all">{{ $run->audit->url }}</div>
+            <div class="ph3 f3 break-all">{{ $run->audit->name }}</div>
             <div class="ph3 black-50">on {{ $run->created_at }}</div>
         </div>
 

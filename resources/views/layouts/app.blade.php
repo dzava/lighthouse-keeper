@@ -32,6 +32,9 @@
             <div class="mw7 center pa3 mt3 bg-white shadow-5 z-5">
                 <form action="{{ route('audits.store') }}" method="POST">
                     @csrf
+                    <input type="text" class="input-reset border-box pa2 mb2 w-100 mw-100 ba b--black-20"
+                           placeholder="Name this audit"
+                           name="name" required>
                     <input type="url" class="input-reset border-box pa2 mb2 w-100 mw-100 ba b--black-20"
                            placeholder="Url"
                            name="url" required>

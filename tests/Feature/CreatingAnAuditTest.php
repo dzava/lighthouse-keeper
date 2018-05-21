@@ -22,6 +22,7 @@ class CreatingAnAuditTest extends TestCase
 
         $audit = Audit::first();
         $this->assertNotNull($audit);
+        $this->assertEquals('Test audit', $audit->name);
         $this->assertEquals('http://example.com', $audit->url);
         $this->assertTrue($audit->accessibility);
         $this->assertTrue($audit->best_practices);
@@ -36,6 +37,7 @@ class CreatingAnAuditTest extends TestCase
     protected function validParams($overrides = [])
     {
         return array_merge([
+            'name' => 'Test audit',
             'url' => 'http://example.com',
             'accessibility' => true,
             'best_practices' => true,
