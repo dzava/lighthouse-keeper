@@ -81,4 +81,20 @@ class Run extends Model
     {
         return $this->hasMany(Report::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Database\Query\Builder
+     */
+    public function failedReports()
+    {
+        return $this->reports()->whereNotNull('failure_reason');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function successfulReports()
+    {
+        return $this->reports()->whereNull('failure_reason');
+    }
 }
