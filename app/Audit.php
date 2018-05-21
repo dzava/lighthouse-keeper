@@ -25,6 +25,11 @@ class Audit extends Model
         'seo' => 'bool',
     ];
 
+    public function getUrlsAttribute($value)
+    {
+        return collect(explode("\n", $value));
+    }
+
     public function getRunCountAttribute()
     {
         return $this->runs()->count();

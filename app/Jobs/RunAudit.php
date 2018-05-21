@@ -41,10 +41,24 @@ class RunAudit implements ShouldQueue
     public function handle(Auditor $auditor)
     {
         $run = Run::forAudit($this->audit);
-        $url = $this->audit->url;
+        $auditor->configureForAudit($this->audit);
 
+        $this->audit->urls->each(function ($url) use ($auditor, $run) {
+            $this->auditUrl($auditor, $url, $run);
+        });
+
+        event(new RunFinishedEvent($run));
+    }
+
+    /**
+     * @param Auditor $auditor
+     * @param $url
+     * @param $run
+     */
+    protected function auditUrl(Auditor $auditor, $url, $run): void
+    {
         try {
-            $reportPaths = $auditor->configureForAudit($this->audit)->audit($url);
+            $reportPaths = $auditor->audit($url);
 
             $report = $run->addReport($url, ...$reportPaths);
         } catch (ProcessTimedOutException $e) {
@@ -56,6 +70,5 @@ class RunAudit implements ShouldQueue
         }
 
         event(new ReportCreatedEvent($report));
-        event(new RunFinishedEvent($run));
     }
 }

@@ -23,7 +23,7 @@ class CreatingAnAuditTest extends TestCase
         $audit = Audit::first();
         $this->assertNotNull($audit);
         $this->assertEquals('Test audit', $audit->name);
-        $this->assertEquals('http://example.com', $audit->url);
+        $this->assertEquals(['http://example.com'], $audit->urls->toArray());
         $this->assertTrue($audit->accessibility);
         $this->assertTrue($audit->best_practices);
         $this->assertTrue($audit->performance);
@@ -38,7 +38,7 @@ class CreatingAnAuditTest extends TestCase
     {
         return array_merge([
             'name' => 'Test audit',
-            'url' => 'http://example.com',
+            'urls' => 'http://example.com',
             'accessibility' => true,
             'best_practices' => true,
             'performance' => true,

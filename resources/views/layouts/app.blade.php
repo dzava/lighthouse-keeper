@@ -20,8 +20,8 @@
         </main>
 
         <button title="Create new audit"
-            class="input-reset fixed right-1 bottom-1 br-pill w3 h3 z-999 outline-0 bg-purple b--black-10 shadow-1"
-            data-toggle-modal="#new-audit-modal">
+                class="input-reset fixed right-1 bottom-1 br-pill w3 h3 z-999 outline-0 bg-purple b--black-10 shadow-1"
+                data-toggle-modal="#new-audit-modal">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w1 h1">
                 <path fill="white" d="M 6,4 H 9.9999998 V 6 H 6 v 4 H 4 V 6 H 0 V 4 H 4 V 0 h 2 z"></path>
             </svg>
@@ -35,9 +35,9 @@
                     <input type="text" class="input-reset border-box pa2 mb2 w-100 mw-100 ba b--black-20"
                            placeholder="Name this audit"
                            name="name" required>
-                    <input type="url" class="input-reset border-box pa2 mb2 w-100 mw-100 ba b--black-20"
-                           placeholder="Url"
-                           name="url" required>
+
+                    <textarea name="urls" class="input-reset border-box pa2 mb2 w-100 mw-100 ba b--black-20"
+                              placeholder="Urls to audit (one per line, absolute urls only)" rows="10"></textarea>
 
                     <div class="flex flex-wrap items-center justify-between-ns pa3 ba b--light-gray">
                         <label class="pr2 pb2 pb0-ns">

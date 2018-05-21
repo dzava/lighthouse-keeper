@@ -18,7 +18,7 @@ class LighthouseAuditorTest extends TestCase
     {
         $audit = factory(Audit::class)->make(['pwa' => false, 'best_practices' => false]);
 
-        [$jsonReport, $htmlReport] = $this->getAuditor()->configureForAudit($audit)->audit($audit->url);
+        [$jsonReport, $htmlReport] = $this->getAuditor()->configureForAudit($audit)->audit($audit->urls->first());
 
         $this->assertFileExists($jsonReport);
         $this->assertFileExists($htmlReport);

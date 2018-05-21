@@ -47,9 +47,29 @@ class RunningAnAuditTest extends TestCase
     }
 
     /** @test */
+    public function auditing_multiple_urls()
+    {
+        $audit = factory(Audit::class)->states('multiple')->create();
+
+        dispatch(new RunAudit($audit));
+
+        $this->assertCount(1, $audit->runs);
+        $this->assertCount(2, ($run = $audit->runs->first())->reports);
+        [$report1, $report2] = $run->reports;
+        $this->assertEquals('http://example.com', $report1->url);
+        $this->assertNotNull($report1->json_report);
+        $this->assertNotNull($report1->html_report);
+        $this->assertFalse($report1->failed());
+        $this->assertEquals('http://example.com/with/a/path', $report2->url);
+        $this->assertNotNull($report2->json_report);
+        $this->assertNotNull($report2->html_report);
+        $this->assertFalse($report2->failed());
+    }
+
+    /** @test */
     public function records_a_failed_report()
     {
-        $audit = factory(Audit::class)->create(['url' => 'invalid-url']);
+        $audit = factory(Audit::class)->states('invalid')->create();
 
         dispatch(new RunAudit($audit));
 
