@@ -19,6 +19,11 @@ class AuditsController extends Controller
         return view('audits.index', compact('audits'));
     }
 
+    public function create()
+    {
+        return view('audits.create');
+    }
+
     public function store()
     {
         $audit = Audit::create(request([
