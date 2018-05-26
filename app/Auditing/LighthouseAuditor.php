@@ -24,7 +24,8 @@ class LighthouseAuditor implements Auditor
             ->bestPractices($audit->best_practices)
             ->performance($audit->performance)
             ->pwa($audit->pwa)
-            ->seo($audit->seo);
+            ->seo($audit->seo)
+            ->setHeaders($this->formatHeaders($audit->headers));
 
         return $this;
     }
@@ -57,5 +58,19 @@ class LighthouseAuditor implements Auditor
         }
 
         return uniqid($path);
+    }
+
+    private function formatHeaders($headers)
+    {
+        return collect($headers)->flatMap(function ($header) {
+            $name = dash_case(array_get($header, 'name'));
+            $value = array_get($header, 'value');
+
+            if (empty($value)) {
+                $value = '';
+            }
+
+            return [$name => $value];
+        })->toArray();
     }
 }

@@ -16,3 +16,10 @@ if (!function_exists('get_color_for_score')) {
         return "$prefix$color";
     }
 }
+
+if (!function_exists('dash_case')) {
+    function dash_case($value)
+    {
+        return preg_replace('/\s+/u', '-', $value);
+    }
+}

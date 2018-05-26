@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool performance
  * @property bool pwa
  * @property bool seo
+ * @property mixed headers
  */
 class Audit extends Model
 {
@@ -23,6 +24,7 @@ class Audit extends Model
         'performance' => 'bool',
         'pwa' => 'bool',
         'seo' => 'bool',
+        'headers' => 'array',
     ];
 
     public function getUrlsAttribute($value)

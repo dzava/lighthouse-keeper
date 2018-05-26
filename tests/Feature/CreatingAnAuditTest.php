@@ -16,7 +16,7 @@ class CreatingAnAuditTest extends TestCase
     public function can_create_an_audit()
     {
         Queue::fake();
-        $this->withoutExceptionHandling();
+
         $this->post(route('audits.store'), $this->validParams())
             ->assertRedirect('/');
 
@@ -29,6 +29,10 @@ class CreatingAnAuditTest extends TestCase
         $this->assertTrue($audit->performance);
         $this->assertTrue($audit->pwa);
         $this->assertTrue($audit->seo);
+        $this->assertEquals([
+            ['name' => 'Authorization', 'value' => 'bearer: abc123'],
+            ['name' => 'Cookie', 'value' => 'monster=blue'],
+        ], $audit->headers);
         Queue::assertPushed(RunAudit::class, function ($job) use ($audit) {
             return $job->audit->id === $audit->id;
         });
@@ -44,6 +48,10 @@ class CreatingAnAuditTest extends TestCase
             'performance' => true,
             'pwa' => true,
             'seo' => true,
+            'headers' => [
+                ['name' => 'Authorization', 'value' => 'bearer: abc123'],
+                ['name' => 'Cookie', 'value' => 'monster=blue'],
+            ],
         ], $overrides);
     }
 }

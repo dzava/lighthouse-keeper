@@ -30,6 +30,29 @@ class LighthouseAuditorTest extends TestCase
         $this->assertArraySubset(['accessibility', 'performance', 'seo'], $categories);
     }
 
+    /** @test */
+    public function extra_headers_are_passed_to_lighthouse()
+    {
+        $audit = factory(Audit::class)->make([
+            'headers' => [
+                ['name' => 'Cookie', 'value' => 'monster'],
+                ['name' => 'Empty', 'value' => null],
+                ['name' => 'Number-Zero', 'value' => 0],
+                ['name' => 'With spaces', 'value' => 'and more spaces'],
+            ],
+        ]);
+
+        [$jsonReport, $htmlReport] = $this->getAuditor()->configureForAudit($audit)->audit($audit->urls->first());
+
+        $this->assertFileExists($jsonReport);
+
+        $headers = $this->getHeadersInReport($jsonReport);
+        $this->assertArraySubset(['Cookie' => 'monster'], $headers);
+        $this->assertArraySubset(['Empty' => ''], $headers);
+        $this->assertArraySubset(['Number-Zero' => 0], $headers);
+        $this->assertArraySubset(['With-spaces' => 'and more spaces'], $headers);
+    }
+
     public function getAuditor(): LighthouseAuditor
     {
         return app(LighthouseAuditor::class);
@@ -46,5 +69,12 @@ class LighthouseAuditorTest extends TestCase
         sort($categories);
 
         return $categories;
+    }
+
+    public function getHeadersInReport($path)
+    {
+        $report = json_decode(file_get_contents($path), true);
+
+        return array_get($report, 'runtimeConfig.extraHeaders');
     }
 }

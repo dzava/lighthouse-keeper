@@ -27,7 +27,7 @@ class AuditsController extends Controller
     public function store()
     {
         $audit = Audit::create(request([
-            'name', 'urls', 'accessibility', 'best_practices', 'performance', 'pwa', 'seo',
+            'name', 'urls', 'accessibility', 'best_practices', 'performance', 'pwa', 'seo', 'headers',
         ]));
 
         dispatch(new RunAudit($audit));

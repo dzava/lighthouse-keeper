@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container mw7">
         <form action="{{ route('audits.store') }}" method="POST" class="bg-white pa3 mt3">
             @csrf
             <input type="text" class="input"
@@ -29,6 +29,8 @@
                 </label>
             </div>
 
+            <headers-editor class="mt4 pa3 ba b--light-gray"></headers-editor>
+
             <div class="tr">
                 <button class="input-reset relative pa3 mt3 bg-white br1 ba b--black-20">
                     Create
@@ -38,3 +40,7 @@
         </form>
     </div>
 @stop
+
+@push('scripts')
+    <script src="{{ mix('js/app.js') }}"></script>
+@endpush

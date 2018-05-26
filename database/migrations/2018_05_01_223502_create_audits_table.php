@@ -22,6 +22,7 @@ class CreateAuditsTable extends Migration
             $table->boolean('performance')->default(false);
             $table->boolean('pwa')->default(false);
             $table->boolean('seo')->default(false);
+            $table->json('headers')->nullable();
             $table->timestamps();
         });
     }
