@@ -8,7 +8,7 @@
                    placeholder="Name this audit"
                    name="name" required>
 
-            <textarea name="urls" class="input"
+            <textarea name="urls" class="input" required
                       placeholder="Urls to audit (one per line, absolute urls only)" rows="10"></textarea>
 
             <div class="flex flex-wrap items-center justify-between-ns pa3 ba b--light-gray">
