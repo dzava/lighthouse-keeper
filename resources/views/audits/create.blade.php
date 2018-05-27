@@ -5,11 +5,11 @@
         <form action="{{ route('audits.store') }}" method="POST" class="bg-white pa3 mt3">
             @csrf
             <input type="text" class="input"
-                   placeholder="Name this audit"
+                   placeholder="Name"
                    name="name" required>
 
             <textarea name="urls" class="input" required
-                      placeholder="Urls to audit (one per line, absolute urls only)" rows="10"></textarea>
+                      placeholder="Urls" rows="10"></textarea>
 
             <div class="flex flex-wrap items-center justify-between-ns pa3 ba b--light-gray">
                 <label class="pr2 pb2 pb0-ns">
@@ -27,6 +27,14 @@
                 <label class="pr2 pb2 pb0-ns">
                     <input type="checkbox" name="seo" checked> SEO
                 </label>
+            </div>
+
+            <div class="mt4 pa3 ba b--light-gray">
+                <div class="flex flex-column flex-row-ns items-center-ns">
+                    <label class="w-20 b mb2 mb0-ns" for="timeout">Timeout:</label>
+                    <input type="number" name="timeout" id="timeout" class="input" placeholder="default: 60"
+                           min="1">
+                </div>
             </div>
 
             <headers-editor class="mt4 pa3 ba b--light-gray"></headers-editor>

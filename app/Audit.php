@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool pwa
  * @property bool seo
  * @property mixed headers
+ * @property mixed timeout
  */
 class Audit extends Model
 {

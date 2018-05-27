@@ -25,7 +25,8 @@ class LighthouseAuditor implements Auditor
             ->performance($audit->performance)
             ->pwa($audit->pwa)
             ->seo($audit->seo)
-            ->setHeaders($this->formatHeaders($audit->headers));
+            ->setHeaders($this->formatHeaders($audit->headers))
+            ->setTimeout($audit->timeout);
 
         return $this;
     }

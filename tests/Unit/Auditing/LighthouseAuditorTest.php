@@ -4,6 +4,7 @@ namespace Tests\Unit\Auditing;
 
 use App\Audit;
 use App\Auditing\LighthouseAuditor;
+use Symfony\Component\Process\Exception\ProcessTimedOutException;
 use Tests\TestCase;
 
 /**
@@ -51,6 +52,16 @@ class LighthouseAuditorTest extends TestCase
         $this->assertArraySubset(['Empty' => ''], $headers);
         $this->assertArraySubset(['Number-Zero' => 0], $headers);
         $this->assertArraySubset(['With-spaces' => 'and more spaces'], $headers);
+    }
+
+    /** @test */
+    public function timeout_is_correctly_set()
+    {
+        $this->expectException(ProcessTimedOutException::class);
+
+        $audit = factory(Audit::class)->make(['timeout' => 1]);
+
+        $this->getAuditor()->configureForAudit($audit)->audit($audit->urls->first());
     }
 
     public function getAuditor(): LighthouseAuditor

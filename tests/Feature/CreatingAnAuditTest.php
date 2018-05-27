@@ -29,6 +29,7 @@ class CreatingAnAuditTest extends TestCase
         $this->assertTrue($audit->performance);
         $this->assertTrue($audit->pwa);
         $this->assertTrue($audit->seo);
+        $this->assertEquals(10, $audit->timeout);
         $this->assertEquals([
             ['name' => 'Authorization', 'value' => 'bearer: abc123'],
             ['name' => 'Cookie', 'value' => 'monster=blue'],
@@ -52,6 +53,7 @@ class CreatingAnAuditTest extends TestCase
                 ['name' => 'Authorization', 'value' => 'bearer: abc123'],
                 ['name' => 'Cookie', 'value' => 'monster=blue'],
             ],
+            'timeout' => 10,
         ], $overrides);
     }
 }
