@@ -40,7 +40,7 @@
             <headers-editor class="mt4 pa3 ba b--light-gray"></headers-editor>
 
             <div class="tr">
-                <button class="input-reset relative pa3 mt3 bg-white br1 ba b--black-20">
+                <button class="button">
                     Create
                 </button>
                 <a href="{{ route('audits') }}" class="link ml3">Cancel</a>

@@ -6,6 +6,11 @@
         <div class="mt2 pt3 ph3 relative">
             <div class="ph3 black-70">{{ $audit->runCount }} {{ str_plural('audit', $audit->runCount) }} for</div>
             <div class="ph3 f3 break-all">{{ $audit->name }}</div>
+            <form action="{{ route('runs.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="audit" value="{{ $audit->id }}">
+                <button class="button pa1 absolute right-1 top-0">Run now</button>
+            </form>
         </div>
 
         <div class="mt3 pa3 bg-white">
