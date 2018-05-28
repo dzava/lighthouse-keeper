@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Audit;
+use App\Chart;
 use App\Jobs\RunAudit;
 
 class AuditsController extends Controller
@@ -27,7 +28,7 @@ class AuditsController extends Controller
     public function store()
     {
         $audit = Audit::create(request([
-            'name', 'urls', 'accessibility', 'best_practices', 'performance', 'pwa', 'seo', 'headers', 'timeout'
+            'name', 'urls', 'accessibility', 'best_practices', 'performance', 'pwa', 'seo', 'headers', 'timeout',
         ]));
 
         dispatch(new RunAudit($audit));
@@ -37,7 +38,11 @@ class AuditsController extends Controller
 
     public function show(Audit $audit)
     {
-        return view('audits.show', compact('audit'));
+        $runs = $audit->runs()->latest()->take(20)->get();
+
+        $chart = new Chart($runs);
+
+        return view('audits.show', compact('audit', 'chart'));
     }
 
     public function destroy(Audit $audit)

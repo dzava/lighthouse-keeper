@@ -8,6 +8,10 @@
             <div class="ph3 f3 break-all">{{ $audit->name }}</div>
         </div>
 
+        <div class="mt3 pa3 bg-white">
+            <chart :labels="{{ json_encode($chart->labels) }}" :datasets="{{ json_encode($chart->datasets) }}"></chart>
+        </div>
+
         <div class="mt3 bg-white">
 
             <table class="table">
