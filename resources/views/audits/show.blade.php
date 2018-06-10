@@ -4,7 +4,7 @@
     <div class="container">
 
         <div class="mt2 pt3 ph3 relative">
-            <div class="ph3 black-70">{{ $audit->runCount }} {{ str_plural('audit', $audit->runCount) }} for</div>
+            <div class="ph3 black-70">{{ $audit->runCount }} {{ str_plural('run', $audit->runCount) }} for</div>
             <div class="ph3 f3 break-all">{{ $audit->name }}</div>
             <form action="{{ route('runs.store') }}" method="POST">
                 @csrf

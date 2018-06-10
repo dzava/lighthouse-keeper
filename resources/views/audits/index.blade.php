@@ -6,19 +6,18 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Name</th>
+                <th>Audit</th>
                 <th>Last run</th>
-                <th>Audits</th>
             </tr>
             </thead>
             <tbody>
             @foreach($audits as $audit)
                 <tr class="tc pa3">
-                    <td class="tl break-all">{{ $audit->name }}</td>
-                    <td data-label="Last run" class="nowrap">{{ $audit->latestRun->created_at }}</td>
-                    <td data-label="Audits" class="nowrap">
-                        <a href="{{ route('audits.show', $audit) }}" class="link break-all">Show</a>
-                        ({{ $audit->runCount }})
+                    <td class="tl break-all">
+                        <a href="{{ route('audits.show', $audit) }}" class="link break-all">{{ $audit->name }}</a>
+                    </td>
+                    <td data-label="Last run" class="nowrap">
+                        <a href="{{ route('runs.show', $audit->latestRun) }}" class="link break-all">{{ $audit->latestRun->created_at }}</a>
                     </td>
                 </tr>
             @endforeach
