@@ -10,6 +10,7 @@ use App\Events\RunFinishedEvent;
 use App\Jobs\RunAudit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -91,5 +92,18 @@ class RunningAnAuditTest extends TestCase
 
         Event::assertDispatched(ReportCreatedEvent::class);
         Event::assertDispatched(RunFinishedEvent::class);
+    }
+
+    /** @test */
+    public function manually_running_an_audit()
+    {
+        Queue::fake();
+        $audit = factory(Audit::class)->create();
+
+        $this->post(route('runs.store', ['audit' => $audit->id]));
+
+        Queue::assertPushed(RunAudit::class, function ($job) use ($audit) {
+            return $job->audit->is($audit);
+        });
     }
 }

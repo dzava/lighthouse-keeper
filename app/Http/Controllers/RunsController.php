@@ -15,7 +15,7 @@ class RunsController extends Controller
 
     public function store()
     {
-        $audit = Audit::find(request('audit'));
+        $audit = Audit::findOrFail(request('audit'));
 
         dispatch(new RunAudit($audit));
 
