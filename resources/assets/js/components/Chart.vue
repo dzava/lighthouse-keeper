@@ -30,6 +30,10 @@
                 type: 'line',
                 options: {
                     maintainAspectRatio: false,
+                    legend: {
+                        position: 'right',
+                    },
+                    spanGaps: true,
                     scales: {
                         yAxes: [{
                             ticks: {
@@ -39,7 +43,18 @@
                         }],
                     },
                 },
-                plugins: [AutoColors],
+                plugins: [
+                    AutoColors,
+                    { // Hide the legend on small screens
+                        resize(chart, {width}) {
+                            if (width >= 670) {
+                                chart.options.legend.display = true
+                                return
+                            }
+                            chart.options.legend.display = false
+                        },
+                    },
+                ],
                 data: {
                     labels: this.labels,
                     datasets: this.datasets,

@@ -13,7 +13,7 @@
             </form>
         </div>
 
-        <div class="mt3 pa3 bg-white">
+        <div class="mt3 pa3 h5 bg-white">
             <chart :labels="{{ json_encode($chart->labels) }}" :datasets="{{ json_encode($chart->datasets) }}"></chart>
         </div>
 

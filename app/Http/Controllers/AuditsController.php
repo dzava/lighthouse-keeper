@@ -38,7 +38,7 @@ class AuditsController extends Controller
 
     public function show(Audit $audit)
     {
-        $runs = $audit->runs()->latest()->take(20)->get();
+        $runs = $audit->runs()->latest()->take(20)->get()->reverse();
 
         $chart = new Chart($runs);
 
