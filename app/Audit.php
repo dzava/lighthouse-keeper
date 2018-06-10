@@ -38,9 +38,9 @@ class Audit extends Model
         return $this->runs()->count();
     }
 
-    public function getLatestRunAttribute()
+    public function latestRun()
     {
-        return $this->runs()->latest()->first();
+        return $this->hasOne(Run::class)->latest();
     }
 
     public function runs()

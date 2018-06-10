@@ -15,6 +15,7 @@ class AuditsController extends Controller
             ->latest('runs.created_at')
             ->groupBy('audit_id')
             ->select('audits.*')
+            ->with('latestRun')
             ->get();
 
         return view('audits.index', compact('audits'));
