@@ -17,10 +17,11 @@ class CreatingAnAuditTest extends TestCase
     {
         Queue::fake();
 
-        $this->post(route('audits.store'), $this->validParams())
+        $response = $this->post(route('audits.store'), $this->validParams())
             ->assertRedirect('/');
 
         $audit = Audit::first();
+        $response->assertRedirect(route('audits.edit', $audit));
         $this->assertNotNull($audit);
         $this->assertEquals('Test audit', $audit->name);
         $this->assertEquals(['http://example.com'], $audit->urls->toArray());
@@ -29,11 +30,6 @@ class CreatingAnAuditTest extends TestCase
         $this->assertTrue($audit->performance);
         $this->assertTrue($audit->pwa);
         $this->assertTrue($audit->seo);
-        $this->assertEquals(10, $audit->timeout);
-        $this->assertEquals([
-            ['name' => 'Authorization', 'value' => 'bearer: abc123'],
-            ['name' => 'Cookie', 'value' => 'monster=blue'],
-        ], $audit->headers);
         Queue::assertPushed(RunAudit::class, function ($job) use ($audit) {
             return $job->audit->id === $audit->id;
         });
@@ -44,16 +40,7 @@ class CreatingAnAuditTest extends TestCase
         return array_merge([
             'name' => 'Test audit',
             'urls' => 'http://example.com',
-            'accessibility' => true,
-            'best_practices' => true,
-            'performance' => true,
-            'pwa' => true,
-            'seo' => true,
-            'headers' => [
-                ['name' => 'Authorization', 'value' => 'bearer: abc123'],
-                ['name' => 'Cookie', 'value' => 'monster=blue'],
-            ],
-            'timeout' => 10,
+            'audits' => ['accessibility', 'best_practices', 'performance', 'pwa', 'seo'],
         ], $overrides);
     }
 }

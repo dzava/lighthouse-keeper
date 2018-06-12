@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Audit extends Model
 {
+    protected $availableAudits = ['accessibility', 'best_practices', 'performance', 'pwa', 'seo'];
+
     protected $guarded = [];
 
     protected $casts = [
@@ -33,9 +35,21 @@ class Audit extends Model
         return collect(explode("\n", $value));
     }
 
+    public function getUrlsAsStringAttribute()
+    {
+        return implode("\n", $this->urls->toArray());
+    }
+
     public function getRunCountAttribute()
     {
         return $this->runs()->count();
+    }
+
+    public function setAuditsAttribute($value)
+    {
+        foreach ($this->availableAudits as $audit) {
+            $this->$audit = in_array($audit, $value);
+        }
     }
 
     public function latestRun()

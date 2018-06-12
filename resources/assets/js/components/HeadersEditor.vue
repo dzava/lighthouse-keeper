@@ -17,9 +17,15 @@
 
 <script>
     export default {
+        props: {
+            dataHeaders: {
+                type: Array,
+                default: [],
+            },
+        },
         data: function () {
             return {
-                headers: [],
+                headers: this.dataHeaders || [],
             }
         },
         methods: {

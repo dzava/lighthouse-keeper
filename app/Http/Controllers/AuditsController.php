@@ -29,12 +29,30 @@ class AuditsController extends Controller
     public function store()
     {
         $audit = Audit::create(request([
-            'name', 'urls', 'accessibility', 'best_practices', 'performance', 'pwa', 'seo', 'headers', 'timeout',
+            'name', 'urls', 'audits',
         ]));
 
         dispatch(new RunAudit($audit));
 
         return redirect('/');
+    }
+
+    public function edit(Audit $audit)
+    {
+        return view('audits.edit', compact('audit'));
+    }
+
+    public function update(Audit $audit)
+    {
+        request()->merge([
+            'headers' => request('headers', [])
+        ]);
+
+        $audit->update(request([
+            'name', 'urls', 'audits', 'headers', 'timeout',
+        ]));
+
+        return redirect()->route('audits.edit', $audit);
     }
 
     public function show(Audit $audit)

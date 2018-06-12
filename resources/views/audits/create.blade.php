@@ -13,31 +13,21 @@
 
             <div class="flex flex-wrap items-center justify-between-ns pa3 ba b--light-gray">
                 <label class="pr2 pb2 pb0-ns">
-                    <input type="checkbox" name="accessibility" checked> Accessibility
+                    <input type="checkbox" name="audits[]" value="accessibility" checked> Accessibility
                 </label>
                 <label class="pr2 pb2 pb0-ns">
-                    <input type="checkbox" name="best_practices" checked> Best Practices
+                    <input type="checkbox" name="audits[]" value="best_practices" checked> Best Practices
                 </label>
                 <label class="pr2 pb2 pb0-ns">
-                    <input type="checkbox" name="performance" checked> Performance
+                    <input type="checkbox" name="audits[]" value="performance" checked> Performance
                 </label>
                 <label class="pr2 pb2 pb0-ns">
-                    <input type="checkbox" name="pwa"> P.W.A
+                    <input type="checkbox" name="audits[]" value="pwa"> P.W.A
                 </label>
                 <label class="pr2 pb2 pb0-ns">
-                    <input type="checkbox" name="seo" checked> SEO
+                    <input type="checkbox" name="audits[]" value="seo" checked> SEO
                 </label>
             </div>
-
-            <div class="mt4 pa3 ba b--light-gray">
-                <div class="flex flex-column flex-row-ns items-center-ns">
-                    <label class="w-20 b mb2 mb0-ns" for="timeout">Timeout:</label>
-                    <input type="number" name="timeout" id="timeout" class="input" placeholder="default: 60"
-                           min="1">
-                </div>
-            </div>
-
-            <headers-editor class="mt4 pa3 ba b--light-gray"></headers-editor>
 
             <div class="tr">
                 <button class="button">
