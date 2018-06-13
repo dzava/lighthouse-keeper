@@ -10,10 +10,10 @@ class AuditsController extends Controller
 {
     public function index()
     {
-        $audits = Audit::join('runs', 'audits.id', '=', 'runs.audit_id')
+        $audits = Audit::leftJoin('runs', 'audits.id', '=', 'runs.audit_id')
             ->distinct()
             ->latest('runs.created_at')
-            ->groupBy('audit_id')
+            ->groupBy('audits.id')
             ->select('audits.*')
             ->with('latestRun')
             ->get();
@@ -32,7 +32,7 @@ class AuditsController extends Controller
             'name', 'urls', 'audits',
         ]));
 
-        if(request('run_immediately')) {
+        if (request('run_immediately')) {
             dispatch(new RunAudit($audit));
         }
 
@@ -49,7 +49,7 @@ class AuditsController extends Controller
     public function update(Audit $audit)
     {
         request()->merge([
-            'headers' => request('headers', [])
+            'headers' => request('headers', []),
         ]);
 
         $audit->update(request([

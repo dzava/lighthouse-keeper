@@ -17,7 +17,12 @@
                         <a href="{{ route('audits.show', $audit) }}" class="link break-all">{{ $audit->name }}</a>
                     </td>
                     <td data-label="Last run" class="nowrap">
-                        <a href="{{ route('runs.show', $audit->latestRun) }}" class="link break-all">{{ $audit->latestRun->created_at }}</a>
+                        @if($audit->latestRun)
+                            <a href="{{ route('runs.show', $audit->latestRun) }}"
+                               class="link break-all">{{ $audit->latestRun->created_at }}</a>
+                        @else
+                            Never
+                        @endif
                     </td>
                 </tr>
             @endforeach
