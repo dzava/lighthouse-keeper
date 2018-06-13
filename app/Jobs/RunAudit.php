@@ -43,7 +43,7 @@ class RunAudit implements ShouldQueue
         $run = Run::forAudit($this->audit);
         $auditor->configureForAudit($this->audit);
 
-        $this->audit->urls->each(function ($url) use ($auditor, $run) {
+        collect($this->audit->urls)->each(function ($url) use ($auditor, $run) {
             $this->auditUrl($auditor, $url, $run);
         });
 

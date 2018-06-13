@@ -34,7 +34,7 @@ class AuditsController extends Controller
 
         dispatch(new RunAudit($audit));
 
-        return redirect('/');
+        return redirect()->route('audits.edit', $audit);
     }
 
     public function edit(Audit $audit)

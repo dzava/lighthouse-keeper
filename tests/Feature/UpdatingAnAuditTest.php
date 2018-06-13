@@ -15,7 +15,7 @@ class UpdatingAnAuditTest extends TestCase
     {
         $audit = factory(Audit::class)->create([
             'name' => 'Test audit',
-            'urls' => 'http://example.com',
+            'urls' => ['http://example.com'],
             'accessibility' => false,
             'best_practices' => false,
             'performance' => false,
@@ -26,7 +26,7 @@ class UpdatingAnAuditTest extends TestCase
 
         $response = $this->put(route('audits.update', $audit), [
             'name' => 'Updated audit',
-            'urls' => "http://example.com\nhttp://example.com/2",
+            'urls' => ["http://example.com", "http://example.com/2"],
             'audits' => ['accessibility', 'best_practices', 'performance', 'pwa', 'seo'],
             'timeout' => 10,
             'headers' => [['name' => 'Authorization', 'value' => 'bearer: tok']],
@@ -37,7 +37,7 @@ class UpdatingAnAuditTest extends TestCase
         $audit = Audit::first();
         $this->assertNotNull($audit);
         $this->assertEquals('Updated audit', $audit->name);
-        $this->assertEquals(['http://example.com', 'http://example.com/2'], $audit->urls->toArray());
+        $this->assertEquals(['http://example.com', 'http://example.com/2'], $audit->urls);
         $this->assertTrue($audit->accessibility);
         $this->assertTrue($audit->best_practices);
         $this->assertTrue($audit->performance);

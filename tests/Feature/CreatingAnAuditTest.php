@@ -17,14 +17,13 @@ class CreatingAnAuditTest extends TestCase
     {
         Queue::fake();
 
-        $response = $this->post(route('audits.store'), $this->validParams())
-            ->assertRedirect('/');
+        $response = $this->post(route('audits.store'), $this->validParams());
 
         $audit = Audit::first();
         $response->assertRedirect(route('audits.edit', $audit));
         $this->assertNotNull($audit);
         $this->assertEquals('Test audit', $audit->name);
-        $this->assertEquals(['http://example.com'], $audit->urls->toArray());
+        $this->assertEquals(['http://example.com'], $audit->urls);
         $this->assertTrue($audit->accessibility);
         $this->assertTrue($audit->best_practices);
         $this->assertTrue($audit->performance);
@@ -39,7 +38,7 @@ class CreatingAnAuditTest extends TestCase
     {
         return array_merge([
             'name' => 'Test audit',
-            'urls' => 'http://example.com',
+            'urls' => ['http://example.com'],
             'audits' => ['accessibility', 'best_practices', 'performance', 'pwa', 'seo'],
         ], $overrides);
     }

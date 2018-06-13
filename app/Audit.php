@@ -22,6 +22,7 @@ class Audit extends Model
     protected $guarded = [];
 
     protected $casts = [
+        'urls' => 'array',
         'accessibility' => 'bool',
         'best_practices' => 'bool',
         'performance' => 'bool',
@@ -29,16 +30,6 @@ class Audit extends Model
         'seo' => 'bool',
         'headers' => 'array',
     ];
-
-    public function getUrlsAttribute($value)
-    {
-        return collect(explode("\n", $value));
-    }
-
-    public function getUrlsAsStringAttribute()
-    {
-        return implode("\n", $this->urls->toArray());
-    }
 
     public function getRunCountAttribute()
     {

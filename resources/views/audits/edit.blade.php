@@ -12,14 +12,24 @@
         <form action="{{ route('audits.update', $audit) }}" method="POST" class="bg-white pa3 mt3">
             @csrf
             @method('PATCH')
-            <input type="text" class="input"
-                   placeholder="Name" value="{{ old('name', $audit->name) }}"
-                   name="name" required>
 
-            <textarea name="urls" class="input" required
-                      placeholder="Urls" rows="10">{{ old('urls', $audit->urlsAsString) }}</textarea>
+            <div class="flex flex-column flex-row-ns items-center-ns">
+                <label class="w-30 b mb2 mb0-ns" for="name">Name:</label>
+                <input type="text" class="input" placeholder="Name" value="{{ old('name', $audit->name) }}"
+                       name="name" id="name" required>
+            </div>
 
-            <div class="flex pa3 ba b--light-gray">
+            <div class="flex mt3">
+                <div class="w-30">
+                    <span class="b">Urls</span>
+                </div>
+                <div class="w-100 flex flex-column justify-between-ns">
+                    <tags-input :data-tags="{{ json_encode($audit->urls) }}" type="url" name="urls[]"
+                                placeholder="Add url ..."></tags-input>
+                </div>
+            </div>
+
+            <div class="flex mt3">
                 <div class="w-30">
                     <span class="b">Audits</span>
                 </div>
@@ -50,18 +60,16 @@
                 </div>
             </div>
 
-            <div class="mt4 pa3 ba b--light-gray">
-                <div class="flex flex-column flex-row-ns items-center-ns">
-                    <label class="w-30 b mb2 mb0-ns" for="timeout">Timeout:</label>
-                    <input type="number" name="timeout" id="timeout" class="input"
-                           min="1" value="{{ old('timeout', $audit->timeout) }}" required>
-                </div>
+            <div class="flex flex-column flex-row-ns items-center-ns mt3">
+                <label class="w-30 b mb2 mb0-ns" for="timeout">Timeout:</label>
+                <input type="number" name="timeout" id="timeout" class="input"
+                       min="1" value="{{ old('timeout', $audit->timeout) }}" required>
             </div>
 
-            <div class="flex mt4 pa3 ba b--light-gray">
+            <div class="flex mt3">
                 <div class="w-30">
                     <span class="b">Headers</span>
-                    <p>Any extra headers to be send in requests</p>
+                    <p class="mt0">Any extra headers to be send in requests</p>
                 </div>
                 <div class="w-100 ">
                     <headers-editor :data-headers="{{ json_encode($audit->headers) }}"></headers-editor>
