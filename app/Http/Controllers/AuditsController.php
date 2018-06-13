@@ -32,7 +32,9 @@ class AuditsController extends Controller
             'name', 'urls', 'audits',
         ]));
 
-        dispatch(new RunAudit($audit));
+        if(request('run_immediately')) {
+            dispatch(new RunAudit($audit));
+        }
 
         success("Audit '{$audit->name}' created successfully");
 

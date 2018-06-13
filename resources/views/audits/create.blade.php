@@ -51,6 +51,10 @@
             </div>
 
             <div class="tr">
+                <label class="pr2 pb2 pb0-ns">
+                    <input type="checkbox" name="run_immediately"> Schedule audit to run immediately
+                </label>
+
                 <button class="button">
                     Create
                 </button>
