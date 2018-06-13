@@ -34,6 +34,8 @@ class AuditsController extends Controller
 
         dispatch(new RunAudit($audit));
 
+        success("Audit '{$audit->name}' created successfully");
+
         return redirect()->route('audits.edit', $audit);
     }
 
@@ -51,6 +53,8 @@ class AuditsController extends Controller
         $audit->update(request([
             'name', 'urls', 'audits', 'headers', 'timeout',
         ]));
+
+        success("Audit '{$audit->name}' updated successfully");
 
         return redirect()->route('audits.edit', $audit);
     }

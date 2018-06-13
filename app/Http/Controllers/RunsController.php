@@ -19,6 +19,8 @@ class RunsController extends Controller
 
         dispatch(new RunAudit($audit));
 
+        success("Scheduled audit '{$audit->name}' to be run");
+
         return redirect()->route('audits.show', $audit);
     }
 }

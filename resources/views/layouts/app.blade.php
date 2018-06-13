@@ -26,6 +26,7 @@
             </svg>
         </a>
 
+        <flash message="{{ session('flash') }}" level="{{ session('flash_level', 'info') }}"></flash>
     </div>
 
     <script src="{{ mix('js/app.js') }}"></script>
