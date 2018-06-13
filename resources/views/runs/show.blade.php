@@ -4,7 +4,9 @@
     <div class="container">
         <div class="mt2 pt3 ph3 relative">
             <div class="ph3 black-50">{{ $run->reportCount }} {{ str_plural('report', $run->reportCount) }} for</div>
-            <div class="ph3 f3 break-all">{{ $run->audit->name }}</div>
+            <div class="ph3 f3 break-all">
+                <a href="{{ route('audits.show', $run->audit) }}" class="link black-90">{{ $run->audit->name }}</a>
+            </div>
             <div class="ph3 black-50">on {{ $run->created_at }}</div>
         </div>
 
@@ -19,7 +21,7 @@
                         <th>Accessibility</th>
                         <th>Best practices</th>
                         <th>S.E.O</th>
-                        <th>Reports</th>
+                        <th>Report</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,7 +48,7 @@
                             </td>
                             <td class="nowrap">
                                 <a href="{{ route('reports.show', $report) }}" class="link">
-                                    Open report
+                                    Open
                                 </a>
                             </td>
                         </tr>
