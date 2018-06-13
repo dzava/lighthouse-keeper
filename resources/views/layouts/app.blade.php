@@ -19,17 +19,30 @@
             @yield('content')
         </main>
 
-        <a title="Create new audit" href="{{ route('audits.create') }}"
-           class="fixed right-1 bottom-1 flex items-center justify-center br-pill w2 h2 z-999 outline-0 bg-purple b--black-10 shadow-1">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" class="w1 h1">
-                <path fill="white" d="M 6,4 H 9.9999998 V 6 H 6 v 4 H 4 V 6 H 0 V 4 H 4 V 0 h 2 z"></path>
-            </svg>
-        </a>
+        <div class="fab">
+            <button class="fab-button fab-button--primary">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="black-90 w1 h1">
+                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" fill="white"></path>
+                </svg>
+            </button>
+
+            @stack('fab-start')
+            <a class="fab-button fab-button--secondary" href="{{ route('audits.create') }}">New Audit</a>
+            <a class="fab-button fab-button--secondary" href="{{ route('audits.index') }}">All Audits</a>
+        </div>
 
         <flash message="{{ session('flash') }}" level="{{ session('flash_level', 'info') }}"></flash>
     </div>
 
     <script src="{{ mix('js/app.js') }}"></script>
+    <script>
+        Array.from(document.querySelectorAll('.fab-button--primary')).forEach(el => {
+            const fab = el.closest('.fab')
+            el.addEventListener('click', () => {
+                fab.classList.toggle('is-expanded')
+            })
+        })
+    </script>
     @stack('scripts')
 </body>
 </html>

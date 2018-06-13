@@ -3,14 +3,9 @@
 @section('content')
     <div class="container">
 
-        <div class="mt2 pt3 ph3 relative">
+        <div class="mt2 pt3 ph3">
             <div class="ph3 black-70">{{ $audit->runCount }} {{ str_plural('run', $audit->runCount) }} for</div>
             <div class="ph3 f3 break-all">{{ $audit->name }}</div>
-            <form action="{{ route('runs.store') }}" method="POST">
-                @csrf
-                <input type="hidden" name="audit" value="{{ $audit->id }}">
-                <button class="button pa1 absolute right-1 top-0">Run now</button>
-            </form>
         </div>
 
         <div class="mt3 pa3 h5 bg-white">
@@ -61,3 +56,14 @@
         </div>
     </div>
 @stop
+
+@push('fab-start')
+    <a class="fab-button fab-button--secondary" href="{{ route('audits.edit', $audit) }}">
+        Edit
+    </a>
+    <form action="{{ route('runs.store') }}" method="POST">
+        @csrf
+        <input type="hidden" name="audit" value="{{ $audit->id }}">
+        <button class="fab-button fab-button--secondary">Run now</button>
+    </form>
+@endpush

@@ -85,3 +85,9 @@
         </form>
     </div>
 @stop
+
+@push('fab-start')
+    <a class="fab-button fab-button--secondary" href="{{ route('audits.show', $audit) }}">
+        {{ $audit->name }}
+    </a>
+@endpush
