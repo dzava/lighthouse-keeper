@@ -3,7 +3,7 @@
 
 <template>
     <div class="flex flex-wrap items-baseline">
-        <span class="flex items-center ba br2 b--dark-blue pa2 pr0 mr2 mb2 no-select" v-for="tag in tags">
+        <span class="flex items-center ba br2 b--dark-blue pa2 pr0 mr2 mb2 break-all" v-for="tag in tags">
             <input type="hidden" :name="name" :value="tag">
             <span>{{ tag }}</span>
             <button type="button" class="input-reset bn bg-transparent dark-blue ml1 pointer" @click="removeTag(tag)">&times;</button>
