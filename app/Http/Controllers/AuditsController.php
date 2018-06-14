@@ -50,10 +50,11 @@ class AuditsController extends Controller
     {
         request()->merge([
             'headers' => request('headers', []),
+            'webhook_enabled' => request('webhook_enabled', false),
         ]);
 
         $audit->update(request([
-            'name', 'urls', 'audits', 'headers', 'timeout',
+            'name', 'urls', 'audits', 'headers', 'timeout', 'webhook_enabled', 'webhook_branch', 'webhook_delay',
         ]));
 
         success("Audit '{$audit->name}' updated successfully");

@@ -76,6 +76,35 @@
                 </div>
             </div>
 
+            <div class="flex mt3">
+                <div class="w-30">
+                    <span class="b">Webhook</span>
+                </div>
+                <div class="w-100 ">
+                    <label class="pr2 pb2 pb0-ns">
+                        <input type="checkbox" name="webhook_enabled"
+                               value="seo" {{ old('seo', $audit->webhook_enabled) ? 'checked': '' }}> Enable
+                    </label>
+
+                    <div class="flex flex-column flex-row-ns items-center-ns mt3">
+                        <label class="w-30 b mb2 mb0-ns" for="webhook_branch">Branch:</label>
+                        <input type="text" name="webhook_branch" id="webhook_branch" class="input"
+                               value="{{ old('webhook_branch', $audit->webhook_branch) }}" required>
+                    </div>
+
+                    <div class="flex flex-column flex-row-ns items-center-ns mt3">
+                        <label class="w-30 b mb2 mb0-ns" for="webhook_delay">Delay:</label>
+                        <input type="number" name="webhook_delay" id="webhook_delay" class="input"
+                               min="0" value="{{ old('webhook_delay', $audit->webhook_delay) }}" required>
+                    </div>
+
+                    <div class="flex flex-column flex-row-ns items-center-ns mt3">
+                        <label class="w-30-ns b mb2 mb0-ns">Webhook url:</label>
+                        <input type="text" class="input bn bg-transparent" disabled value="{{ route('webhooks', $audit) }}">
+                    </div>
+                </div>
+            </div>
+
             <div class="tr">
                 <button class="button">
                     Update

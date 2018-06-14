@@ -23,6 +23,9 @@ class CreateAuditsTable extends Migration
             $table->boolean('pwa')->default(false);
             $table->boolean('seo')->default(false);
             $table->json('headers')->nullable();
+            $table->boolean('webhook_enabled')->default(false);
+            $table->string('webhook_branch')->nullable()->default('master');
+            $table->unsignedInteger('webhook_delay')->default(120);
             $table->unsignedInteger('timeout')->default(60);
             $table->timestamps();
         });

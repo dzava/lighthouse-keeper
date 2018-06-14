@@ -95,7 +95,7 @@ class RunningAnAuditTest extends TestCase
     }
 
     /** @test */
-    public function manually_running_an_audit()
+    public function manually()
     {
         Queue::fake();
         $audit = factory(Audit::class)->create();

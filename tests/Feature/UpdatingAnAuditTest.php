@@ -58,7 +58,7 @@ class UpdatingAnAuditTest extends TestCase
         $this->assertNotEmpty($audit->headers);
 
         $response = $this->put(route('audits.update', $audit), [
-            // Headers a re not sent
+            // Headers are not sent
         ]);
 
         $response->assertRedirect(route('audits.edit', $audit));
@@ -66,5 +66,27 @@ class UpdatingAnAuditTest extends TestCase
         $audit = Audit::first();
         $this->assertNotNull($audit);
         $this->assertEmpty($audit->headers);
+    }
+
+    /** @test */
+    public function updating_webhook_settings()
+    {
+        $audit = factory(Audit::class)->create([
+            'webhook_enabled' => false,
+            'webhook_branch' => 'master',
+            'webhook_delay' => 0,
+        ]);
+
+        $response = $this->put(route('audits.update', $audit), [
+            'webhook_enabled' => true,
+            'webhook_branch' => 'releases',
+            'webhook_delay' => 123,
+        ]);
+
+        $response->assertRedirect(route('audits.edit', $audit));
+        $audit = Audit::first();
+        $this->assertTrue($audit->webhook_enabled);
+        $this->assertEquals('releases', $audit->webhook_branch);
+        $this->assertEquals(123, $audit->webhook_delay);
     }
 }

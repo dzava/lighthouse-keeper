@@ -29,6 +29,8 @@ class Audit extends Model
         'pwa' => 'bool',
         'seo' => 'bool',
         'headers' => 'array',
+        'webhook_enabled' => 'bool',
+        'webhook_delay' => 'int',
     ];
 
     public function getRunCountAttribute()
