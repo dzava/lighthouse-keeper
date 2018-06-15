@@ -119,4 +119,9 @@
     <a class="fab-button fab-button--secondary" href="{{ route('audits.show', $audit) }}">
         {{ $audit->name }}
     </a>
+    <form action="{{ route('runs.store') }}" method="POST">
+        @csrf
+        <input type="hidden" name="audit" value="{{ $audit->id }}">
+        <button class="fab-button fab-button--secondary">Run now</button>
+    </form>
 @endpush
