@@ -30,6 +30,7 @@ class UpdatingAnAuditTest extends TestCase
             'audits' => ['accessibility', 'best_practices', 'performance', 'pwa', 'seo'],
             'timeout' => 10,
             'headers' => [['name' => 'Authorization', 'value' => 'bearer: tok']],
+            'notify_emails' => ['john@example.com', 'jane@example.com'],
         ]);
 
         $response->assertRedirect(route('audits.edit', $audit));
@@ -47,6 +48,7 @@ class UpdatingAnAuditTest extends TestCase
         $this->assertEquals([
             ['name' => 'Authorization', 'value' => 'bearer: tok'],
         ], $audit->headers);
+        $this->assertEquals(['john@example.com', 'jane@example.com'], $audit->notify_emails);
     }
 
     /** @test */
@@ -88,5 +90,31 @@ class UpdatingAnAuditTest extends TestCase
         $this->assertTrue($audit->webhook_enabled);
         $this->assertEquals('releases', $audit->webhook_branch);
         $this->assertEquals(123, $audit->webhook_delay);
+    }
+
+    /** @test */
+    public function removing_notified_emails()
+    {
+        $audit = factory(Audit::class)->create([
+            'name' => 'Test audit',
+            'urls' => ['http://example.com'],
+            'accessibility' => false,
+            'best_practices' => false,
+            'performance' => false,
+            'pwa' => false,
+            'seo' => false,
+            'timeout' => 60,
+            'notify_emails' => ['john@example.com']
+        ]);
+
+        $response = $this->put(route('audits.update', $audit), [
+            // notify_emails is missing,
+        ]);
+
+        $response->assertRedirect(route('audits.edit', $audit));
+
+        $audit = Audit::first();
+        $this->assertNotNull($audit);
+        $this->assertEmpty($audit->notify_emails);
     }
 }

@@ -27,6 +27,7 @@ class CreateAuditsTable extends Migration
             $table->string('webhook_branch')->nullable()->default('master');
             $table->unsignedInteger('webhook_delay')->default(120);
             $table->unsignedInteger('timeout')->default(60);
+            $table->text('notify_emails')->default('[]');
             $table->timestamps();
         });
     }

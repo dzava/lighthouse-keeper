@@ -31,6 +31,7 @@ class Audit extends Model
         'headers' => 'array',
         'webhook_enabled' => 'bool',
         'webhook_delay' => 'int',
+        'notify_emails' => 'array',
     ];
 
     public function getRunCountAttribute()

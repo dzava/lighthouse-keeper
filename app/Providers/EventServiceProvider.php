@@ -17,6 +17,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\RunFinishedEvent' => [
             'App\Listeners\CalculateRunAverageScores',
+            'App\Listeners\NotifyUsers',
         ],
     ];
 

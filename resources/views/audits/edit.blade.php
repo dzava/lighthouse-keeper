@@ -105,6 +105,16 @@
                 </div>
             </div>
 
+            <div class="flex mt3">
+                <div class="w-30">
+                    <span class="b">Notifications</span>
+                </div>
+                <div class="w-100 flex flex-column justify-between-ns">
+                    <tags-input :data-tags="{{ json_encode($audit->notify_emails) }}" type="email" name="notify_emails[]"
+                                placeholder="Add email ..."></tags-input>
+                </div>
+            </div>
+
             <div class="tr">
                 <button class="button">
                     Update
