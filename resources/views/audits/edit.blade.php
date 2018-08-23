@@ -24,8 +24,8 @@
                     <span class="b">Urls</span>
                 </div>
                 <div class="w-100 flex flex-column justify-between-ns">
-                    <tags-input :data-tags="{{ json_encode($audit->urls) }}" type="url" name="urls[]"
-                                placeholder="Add url ..."></tags-input>
+                    <tags-input :data-tags="{{ json_encode($audit->urls) }}" :required="true"
+                                type="url" name="urls[]" placeholder="Add url ..."></tags-input>
                 </div>
             </div>
 

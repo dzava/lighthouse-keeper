@@ -9,8 +9,9 @@
             <button type="button" class="input-reset bn bg-transparent dark-blue ml1 pointer" @click="removeTag(tag)">&times;</button>
         </span>
 
-        <input class="input w-auto flex-grow-1 bn" :type="type" :placeholder="placeholder" v-model="newTag"
-               @keydown.enter.prevent="addTag()" ref="input">
+        <input type="hidden" :name="name" :value="newTag" v-if="newTag.length">
+        <input class="input w-auto flex-grow-1 bn" :type="type" :placeholder="placeholder" :required="isRequired"
+               v-model="newTag" @keydown.enter.prevent="addTag()" ref="input">
     </div>
 </template>
 
@@ -33,12 +34,21 @@
                 type: String,
                 required: true,
             },
+            required: {
+                type: Boolean,
+                default: false,
+            },
         },
         data() {
             return {
                 newTag: '',
                 tags: this.dataTags,
             }
+        },
+        computed: {
+            isRequired() {
+                return this.required && this.tags.length === 0
+            },
         },
         methods: {
             addTag() {

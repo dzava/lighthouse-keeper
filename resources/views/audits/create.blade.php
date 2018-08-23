@@ -20,7 +20,7 @@
                     <span class="b">Urls</span>
                 </div>
                 <div class="w-100 flex flex-column justify-between-ns">
-                    <tags-input type="url" name="urls[]" placeholder="Add url ..."></tags-input>
+                    <tags-input type="url" name="urls[]" placeholder="Add url ..." :required="true"></tags-input>
                 </div>
             </div>
 
