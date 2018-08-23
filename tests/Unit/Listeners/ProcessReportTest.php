@@ -46,9 +46,9 @@ class ProcessReportTest extends TestCase
 
         (new ProcessReport())->handle(new ReportCreatedEvent($report));
 
-        $this->assertEquals(89, $report->accessibility_score);
-        $this->assertEquals(82, $report->best_practices_score);
-        $this->assertEquals(99, $report->performance_score);
+        $this->assertEquals(88, $report->accessibility_score);
+        $this->assertEquals(87, $report->best_practices_score);
+        $this->assertEquals(100, $report->performance_score);
         $this->assertNull($report->pwa_score);
         $this->assertEquals(89, $report->seo_score);
     }

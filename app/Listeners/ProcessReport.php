@@ -47,9 +47,9 @@ class ProcessReport
     {
         $json = json_decode(file_get_contents($this->report->json_report), JSON_OBJECT_AS_ARRAY);
 
-        return collect($json['reportCategories'])->flatMap(function ($category) {
+        return collect($json['categories'])->flatMap(function ($category) {
             $id = str_replace('-', '_', $category['id']);
-            $value = (int)ceil($category['score']);
+            $value = (int)ceil($category['score'] * 100);
 
             return ["{$id}_score" => $value];
         })->toArray();
