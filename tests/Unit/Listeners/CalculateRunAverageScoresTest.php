@@ -18,7 +18,7 @@ class CalculateRunAverageScoresTest extends TestCase
     {
         $run = factory(Run::class)->create();
         factory(Report::class)->states('completed')->create(['run_id' => $run->id, 'accessibility_score' => 100]);
-        factory(Report::class)->states('completed')->create(['run_id' => $run->id, 'accessibility_score' => 50]);
+        factory(Report::class)->states('completed')->create(['run_id' => $run->id, 'accessibility_score' => 55]);
         $this->assertNull($run->accessibility_score);
         $this->assertNull($run->best_practices_score);
         $this->assertNull($run->performance_score);
@@ -27,7 +27,7 @@ class CalculateRunAverageScoresTest extends TestCase
 
         (new CalculateRunAverageScores())->handle(new RunFinishedEvent($run));
 
-        $this->assertEquals(75, $run->accessibility_score);
+        $this->assertEquals(77, $run->accessibility_score);
         $this->assertEquals(82, $run->best_practices_score);
         $this->assertEquals(99, $run->performance_score);
         $this->assertNull($run->pwa_score);

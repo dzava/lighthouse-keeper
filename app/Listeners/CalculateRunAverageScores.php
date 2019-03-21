@@ -6,6 +6,8 @@ use App\Events\RunFinishedEvent;
 
 class CalculateRunAverageScores
 {
+    protected $run;
+
     /**
      * Handle the event.
      *
@@ -14,16 +16,23 @@ class CalculateRunAverageScores
      */
     public function handle(RunFinishedEvent $event)
     {
-        $run = $event->run;
+        $this->run = $event->run;
 
         $scores = [
-            'accessibility_score' => $run->reports()->avg("accessibility_score"),
-            'best_practices_score' => $run->reports()->avg("best_practices_score"),
-            'performance_score' => $run->reports()->avg("performance_score"),
-            'seo_score' => $run->reports()->avg("seo_score"),
-            'pwa_score' => $run->reports()->avg("pwa_score"),
+            'accessibility_score' => $this->calculateAverageScore("accessibility_score"),
+            'best_practices_score' => $this->calculateAverageScore("best_practices_score"),
+            'performance_score' => $this->calculateAverageScore("performance_score"),
+            'seo_score' => $this->calculateAverageScore("seo_score"),
+            'pwa_score' => $this->calculateAverageScore("pwa_score"),
         ];
 
-        $run->update($scores);
+        $this->run->update($scores);
+    }
+
+    protected function calculateAverageScore($column)
+    {
+        $avg = $this->run->reports()->avg($column);
+
+        return is_null($avg) ? null : intval($avg);
     }
 }
