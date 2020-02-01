@@ -9,7 +9,7 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -18,7 +18,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function copyReportsToTemp()
     {
-        copy('tests/fixtures/report.json', 'tests/fixtures/temp/report.json');
-        copy('tests/fixtures/report.html', 'tests/fixtures/temp/report.html');
+        copy(base_path('tests/fixtures/report.json'), base_path('tests/fixtures/temp/report.json'));
+        copy(base_path('tests/fixtures/report.html'), base_path('tests/fixtures/temp/report.html'));
     }
 }

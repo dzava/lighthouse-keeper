@@ -13,7 +13,7 @@ class UpdatingAnAuditTest extends TestCase
     /** @test */
     public function can_be_updated()
     {
-        $audit = factory(Audit::class)->create([
+        $audit = Audit::factory()->create([
             'name' => 'Test audit',
             'urls' => ['http://example.com'],
             'accessibility' => false,
@@ -54,7 +54,7 @@ class UpdatingAnAuditTest extends TestCase
     /** @test */
     public function headers_can_be_removed()
     {
-        $audit = factory(Audit::class)->create([
+        $audit = Audit::factory()->create([
             'headers' => [['name' => 'Authorization', 'value' => 'bearer: tok']],
         ]);
         $this->assertNotEmpty($audit->headers);
@@ -73,7 +73,7 @@ class UpdatingAnAuditTest extends TestCase
     /** @test */
     public function updating_webhook_settings()
     {
-        $audit = factory(Audit::class)->create([
+        $audit = Audit::factory()->create([
             'webhook_enabled' => false,
             'webhook_branch' => 'master',
             'webhook_delay' => 0,
@@ -95,7 +95,7 @@ class UpdatingAnAuditTest extends TestCase
     /** @test */
     public function removing_notified_emails()
     {
-        $audit = factory(Audit::class)->create([
+        $audit = Audit::factory()->create([
             'name' => 'Test audit',
             'urls' => ['http://example.com'],
             'accessibility' => false,

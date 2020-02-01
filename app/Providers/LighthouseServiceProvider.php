@@ -19,7 +19,7 @@ class LighthouseServiceProvider extends ServiceProvider
         app()->singleton(Lighthouse::class, function () {
             return (new Lighthouse())
                 ->setChromePath(env('CHROME_PATH'))
-                ->setLighthousePath(env('LIGHTHOUSE_PATH'));
+                ->setLighthousePath(base_path(env('LIGHTHOUSE_PATH')));
         });
     }
 

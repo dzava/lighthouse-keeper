@@ -18,7 +18,7 @@ class RunningAnAuditTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -30,7 +30,7 @@ class RunningAnAuditTest extends TestCase
     /** @test */
     public function auditing_a_single_url()
     {
-        $audit = factory(Audit::class)->create();
+        $audit = Audit::factory()->create();
         Storage::disk('public')->assertMissing('audits/1/reports/report.json');
         Storage::disk('public')->assertMissing('audits/1/reports/report.html');
 
@@ -50,7 +50,7 @@ class RunningAnAuditTest extends TestCase
     /** @test */
     public function auditing_multiple_urls()
     {
-        $audit = factory(Audit::class)->states('multiple')->create();
+        $audit = Audit::factory()->multiple()->create();
 
         dispatch(new RunAudit($audit));
 
@@ -70,7 +70,7 @@ class RunningAnAuditTest extends TestCase
     /** @test */
     public function records_a_failed_report()
     {
-        $audit = factory(Audit::class)->states('invalid')->create();
+        $audit = Audit::factory()->invalid()->create();
 
         dispatch(new RunAudit($audit));
 
@@ -86,7 +86,7 @@ class RunningAnAuditTest extends TestCase
     {
         Event::fake();
 
-        $audit = factory(Audit::class)->create();
+        $audit = Audit::factory()->create();
 
         dispatch(new RunAudit($audit));
 
@@ -98,7 +98,7 @@ class RunningAnAuditTest extends TestCase
     public function manually()
     {
         Queue::fake();
-        $audit = factory(Audit::class)->create();
+        $audit = Audit::factory()->create();
 
         $this->post(route('runs.store', ['audit' => $audit->id]));
 

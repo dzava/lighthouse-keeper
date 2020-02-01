@@ -1,30 +1,45 @@
 <?php
 
+namespace Database\Factories;
+
 use App\Report;
 use App\Run;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Report::class, function (Faker $faker) {
+class ReportFactory extends Factory
+{
+    protected $model = Report::class;
 
-    return [
-        'run_id' => function () {
-            return factory(Run::class)->create();
-        },
-        'url' => 'http://example.com/',
-        'json_report' => 'tests/fixtures/temp/report.json',
-        'html_report' => 'tests/fixtures/temp/report.html',
-    ];
-});
+    public function definition()
+    {
+        return [
+            'run_id' => function () {
+                return Run::factory();
+            },
+            'url' => 'http://example.com/',
+            'json_report' => base_path('tests/fixtures/temp/report.json'),
+            'html_report' => base_path('tests/fixtures/temp/report.html'),
+        ];
+    }
 
-$factory->state(Report::class, 'failed', [
-    'failure_reason' => 'Factory failed',
-]);
+    /** @return \Illuminate\Database\Eloquent\Factories\Factory */
+    public function failed()
+    {
+        return $this->state([
+            'failure_reason' => 'Factory failed',
+        ]);
+    }
 
-$factory->state(Report::class, 'completed', [
-    'failure_reason' => null,
-    'accessibility_score' => 89,
-    'best_practices_score' => 82,
-    'performance_score' => 99,
-    'pwa_score' => null,
-    'seo_score' => 89,
-]);
+    /** @return \Illuminate\Database\Eloquent\Factories\Factory */
+    public function completed()
+    {
+        return $this->state(['failure_reason' => null,
+                'accessibility_score' => 89,
+                'best_practices_score' => 93,
+                'performance_score' => 99,
+                'pwa_score' => null,
+                'seo_score' => 89,
+            ]
+        );
+    }
+}

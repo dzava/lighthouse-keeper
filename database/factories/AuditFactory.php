@@ -1,23 +1,40 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Audit::class, function (Faker $faker) {
-    return [
-        'name' => 'Test audit',
-        'urls' => ['http://example.com'],
-        'accessibility' => true,
-        'best_practices' => true,
-        'performance' => true,
-        'pwa' => true,
-        'seo' => true,
-    ];
-});
+use App\Audit;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->state(App\Audit::class, 'multiple', [
-    'urls' => ["http://example.com", "http://example.com/with/a/path"],
-]);
+class AuditFactory extends Factory
+{
+    protected $model = Audit::class;
 
-$factory->state(App\Audit::class, 'invalid', [
-    'urls' => ["invalid-url"],
-]);
+    public function definition()
+    {
+        return [
+            'name' => 'Test audit',
+            'urls' => ['http://example.com'],
+            'accessibility' => true,
+            'best_practices' => true,
+            'performance' => true,
+            'pwa' => true,
+            'seo' => true,
+        ];
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Factories\Factory */
+    public function multiple()
+    {
+        return $this->state([
+            'urls' => ["http://example.com", "http://example.com/with/a/path"],
+        ]);
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Factories\Factory */
+    public function invalid()
+    {
+        return $this->state([
+            'urls' => ["invalid-url"],
+        ]);
+    }
+}

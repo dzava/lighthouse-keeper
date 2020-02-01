@@ -3,6 +3,7 @@
 namespace App\Auditing;
 
 use Dzava\Lighthouse\Lighthouse;
+use Illuminate\Support\Arr;
 
 class LighthouseAuditor implements Auditor
 {
@@ -64,8 +65,8 @@ class LighthouseAuditor implements Auditor
     private function formatHeaders($headers)
     {
         return collect($headers)->flatMap(function ($header) {
-            $name = dash_case(array_get($header, 'name'));
-            $value = array_get($header, 'value');
+            $name = dash_case(Arr::get($header, 'name'));
+            $value = Arr::get($header, 'value');
 
             if (empty($value)) {
                 $value = '';

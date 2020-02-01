@@ -19,8 +19,8 @@ class NotifyingUsersTest extends TestCase
     public function notifications_are_send_when_an_audit_run_finishes()
     {
         Notification::fake();
-        $audit = factory(Audit::class)->create(['notify_emails' => ['john@example.com', 'jane@example.com']]);
-        $run = factory(Run::class)->create(['audit_id' => $audit->id]);
+        $audit = Audit::factory()->create(['notify_emails' => ['john@example.com', 'jane@example.com']]);
+        $run = Run::factory()->create(['audit_id' => $audit->id]);
 
         event(new RunFinishedEvent($run));
 

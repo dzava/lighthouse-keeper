@@ -4,6 +4,8 @@ namespace Tests\Unit\Auditing;
 
 use App\Audit;
 use App\Auditing\LighthouseAuditor;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
+use Illuminate\Support\Arr;
 use Symfony\Component\Process\Exception\ProcessTimedOutException;
 use Tests\TestCase;
 
@@ -12,14 +14,14 @@ use Tests\TestCase;
  */
 class LighthouseAuditorTest extends TestCase
 {
-    use AuditorTests;
+    use AuditorTests, ArraySubsetAsserts;
 
     /** @test */
     public function is_configured_from_an_audit()
     {
-        $audit = factory(Audit::class)->make(['pwa' => false, 'best_practices' => false]);
+        $audit = Audit::factory()->make(['pwa' => false, 'best_practices' => false]);
 
-        [$jsonReport, $htmlReport] = $this->getAuditor()->configureForAudit($audit)->audit($audit->urls->first());
+        [$jsonReport, $htmlReport] = $this->getAuditor()->configureForAudit($audit)->audit($audit->urls[0]);
 
         $this->assertFileExists($jsonReport);
         $this->assertFileExists($htmlReport);
@@ -34,7 +36,7 @@ class LighthouseAuditorTest extends TestCase
     /** @test */
     public function extra_headers_are_passed_to_lighthouse()
     {
-        $audit = factory(Audit::class)->make([
+        $audit = Audit::factory()->make([
             'headers' => [
                 ['name' => 'Cookie', 'value' => 'monster'],
                 ['name' => 'Empty', 'value' => null],
@@ -43,7 +45,7 @@ class LighthouseAuditorTest extends TestCase
             ],
         ]);
 
-        [$jsonReport, $htmlReport] = $this->getAuditor()->configureForAudit($audit)->audit($audit->urls->first());
+        [$jsonReport, $htmlReport] = $this->getAuditor()->configureForAudit($audit)->audit($audit->urls[0]);
 
         $this->assertFileExists($jsonReport);
 
@@ -59,9 +61,9 @@ class LighthouseAuditorTest extends TestCase
     {
         $this->expectException(ProcessTimedOutException::class);
 
-        $audit = factory(Audit::class)->make(['timeout' => 1]);
+        $audit = Audit::factory()->make(['timeout' => 1]);
 
-        $this->getAuditor()->configureForAudit($audit)->audit($audit->urls->first());
+        $this->getAuditor()->configureForAudit($audit)->audit($audit->urls[0]);
     }
 
     public function getAuditor(): LighthouseAuditor
@@ -75,7 +77,7 @@ class LighthouseAuditorTest extends TestCase
 
         $categories = array_map(function ($category) {
             return $category['id'];
-        }, $jsonReport['reportCategories']);
+        }, $jsonReport['categories']);
 
         sort($categories);
 
@@ -86,6 +88,6 @@ class LighthouseAuditorTest extends TestCase
     {
         $report = json_decode(file_get_contents($path), true);
 
-        return array_get($report, 'runtimeConfig.extraHeaders');
+        return Arr::get($report, 'configSettings.extraHeaders');
     }
 }

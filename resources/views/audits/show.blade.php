@@ -4,7 +4,7 @@
     <div class="container">
 
         <div class="mt2 pt3 ph3">
-            <div class="ph3 black-70">{{ $audit->runCount }} {{ str_plural('run', $audit->runCount) }} for</div>
+            <div class="ph3 black-70">{{ $audit->runCount }} {{ \Illuminate\Support\Str::plural('run', $audit->runCount) }} for</div>
             <div class="ph3 f3 break-all">{{ $audit->name }}</div>
         </div>
 

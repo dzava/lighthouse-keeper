@@ -52,8 +52,8 @@ class RunAudit implements ShouldQueue
 
     /**
      * @param Auditor $auditor
-     * @param $url
-     * @param $run
+     * @param string $url
+     * @param Run $run
      */
     protected function auditUrl(Auditor $auditor, $url, $run): void
     {

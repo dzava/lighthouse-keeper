@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Audit;
 use App\Jobs\RunAudit;
+use Illuminate\Support\Arr;
 
 class WebhooksController extends Controller
 {
@@ -32,13 +33,13 @@ class WebhooksController extends Controller
             return true;
         }
 
-        $ref = array_get(request(), 'ref', false);
+        $ref = Arr::get(request(), 'ref', false);
 
         if ($ref === false) {
             return false;
         }
 
-        $branch = array_last(preg_split('|/|', $ref));
+        $branch = Arr::last(preg_split('|/|', $ref));
 
         return $branch === $audit->webhook_branch;
     }

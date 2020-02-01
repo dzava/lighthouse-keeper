@@ -17,9 +17,9 @@ class FakeAuditor implements Auditor
             throw new AuditFailedException($url, '');
         }
 
-        copy('tests/fixtures/report.json', 'tests/fixtures/temp/report.json');
-        copy('tests/fixtures/report.html', 'tests/fixtures/temp/report.html');
+        copy(base_path('tests/fixtures/report.json'), base_path('tests/fixtures/temp/report.json'));
+        copy(base_path('tests/fixtures/report.html'), base_path('tests/fixtures/temp/report.html'));
 
-        return ['tests/fixtures/temp/report.json', 'tests/fixtures/temp/report.html'];
+        return [base_path('tests/fixtures/temp/report.json'), base_path('tests/fixtures/temp/report.html')];
     }
 }

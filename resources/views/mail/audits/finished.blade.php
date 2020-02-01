@@ -7,11 +7,11 @@ A total of <b>{{ $totalReports }}</b> urls were checked, <b>{{ $successfulReport
 @component('mail::table')
     | Audit          | Score         |
     | -------------- |:-------------:|
-    | Performance    | {{ $run->performance_score or '-' }}  |
-    | P.W.A          | {{ $run->pwa_score or '-' }} |
-    | Accessibility  | {{ $run->accessibility_score or '-' }} |
-    | Best practices | {{ $run->best_practices_score or '-' }} |
-    | S.E.O	         | {{ $run->seo_score or '-' }} |
+    | Performance    | {{ $run->performance_score ?? '-' }}  |
+    | P.W.A          | {{ $run->pwa_score ?? '-' }} |
+    | Accessibility  | {{ $run->accessibility_score ?? '-' }} |
+    | Best practices | {{ $run->best_practices_score ?? '-' }} |
+    | S.E.O	         | {{ $run->seo_score ?? '-' }} |
 @endcomponent
 
 @component('mail::button', ['url' => route('runs.show', $run)])

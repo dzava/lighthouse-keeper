@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="mt2 pt3 ph3 relative">
-            <div class="ph3 black-50">{{ $run->reportCount }} {{ str_plural('report', $run->reportCount) }} for</div>
+            <div class="ph3 black-50">{{ $run->reportCount }} {{ \Illuminate\Support\Str::plural('report', $run->reportCount) }} for</div>
             <div class="ph3 f3 break-all">
                 <a href="{{ route('audits.show', $run->audit) }}" class="link black-90">{{ $run->audit->name }}</a>
             </div>

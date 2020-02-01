@@ -16,7 +16,7 @@ class IncomingWebhookTest extends TestCase
     public function the_matching_audit_is_run()
     {
         Queue::fake();
-        $audit = factory(Audit::class)->create([
+        $audit = Audit::factory()->create([
             'webhook_enabled' => true,
             'webhook_branch' => 'master',
             'webhook_delay' => 69,
@@ -34,7 +34,7 @@ class IncomingWebhookTest extends TestCase
     public function the_audit_is_not_run_if_the_webhook_is_disabled()
     {
         Queue::fake();
-        $audit = factory(Audit::class)->create([
+        $audit = Audit::factory()->create([
             'webhook_enabled' => false,
             'webhook_branch' => 'master',
         ]);
@@ -49,7 +49,7 @@ class IncomingWebhookTest extends TestCase
     public function the_audit_is_not_run_if_the_branch_does_not_match()
     {
         Queue::fake();
-        $audit = factory(Audit::class)->create([
+        $audit = Audit::factory()->create([
             'webhook_enabled' => true,
             'webhook_branch' => 'master',
             'webhook_delay' => 69,
@@ -65,7 +65,7 @@ class IncomingWebhookTest extends TestCase
     public function the_audit_is_always_run_when_the_branch_is_empty()
     {
         Queue::fake();
-        $audit = factory(Audit::class)->create([
+        $audit = Audit::factory()->create([
             'webhook_enabled' => true,
             'webhook_branch' => null,
             'webhook_delay' => 69,

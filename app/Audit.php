@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Audit extends Model
 {
+    use HasFactory;
+
     protected $availableAudits = ['accessibility', 'best_practices', 'performance', 'pwa', 'seo'];
 
     protected $guarded = [];

@@ -13,7 +13,7 @@ class ProcessReportTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -24,7 +24,7 @@ class ProcessReportTest extends TestCase
     /** @test */
     public function it_marks_the_report_as_failed_when_the_json_report_is_not_generated()
     {
-        $report = factory(Report::class)->create(['json_report' => '/not/a/valid/report']);
+        $report = Report::factory()->create(['json_report' => '/not/a/valid/report']);
         $this->assertFalse($report->failed());
 
         (new ProcessReport())->handle(new ReportCreatedEvent($report));
@@ -36,7 +36,7 @@ class ProcessReportTest extends TestCase
     public function it_will_store_the_scores_from_the_json_report()
     {
         $this->copyReportsToTemp();
-        $report = factory(Report::class)->create();
+        $report = Report::factory()->create();
 
         $this->assertNull($report->accessibility_score);
         $this->assertNull($report->best_practices_score);
@@ -46,18 +46,18 @@ class ProcessReportTest extends TestCase
 
         (new ProcessReport())->handle(new ReportCreatedEvent($report));
 
-        $this->assertEquals(88, $report->accessibility_score);
-        $this->assertEquals(87, $report->best_practices_score);
+        $this->assertEquals(92, $report->accessibility_score);
+        $this->assertEquals(93, $report->best_practices_score);
         $this->assertEquals(100, $report->performance_score);
         $this->assertNull($report->pwa_score);
-        $this->assertEquals(89, $report->seo_score);
+        $this->assertEquals(91, $report->seo_score);
     }
 
     /** @test */
     public function it_stores_the_reports()
     {
         $this->copyReportsToTemp();
-        $report = factory(Report::class)->create();
+        $report = Report::factory()->create();
         $this->assertFileExists($report->json_report);
         $this->assertFileExists($report->html_report);
         Storage::disk('public')->assertMissing($originalJsonReport = $report->json_report);
@@ -65,8 +65,8 @@ class ProcessReportTest extends TestCase
 
         (new ProcessReport())->handle(new ReportCreatedEvent($report));
 
-        $this->assertFileNotExists($originalJsonReport);
-        $this->assertFileNotExists($originalHtmReport);
+        $this->assertFileDoesNotExist($originalJsonReport);
+        $this->assertFileDoesNotExist($originalHtmReport);
         $report->refresh();
         Storage::disk('public')->assertExists($report->json_report);
         Storage::disk('public')->assertExists($report->html_report);

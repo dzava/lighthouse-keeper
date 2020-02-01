@@ -1,13 +1,21 @@
 <?php
 
+namespace Database\Factories;
+
 use App\Audit;
 use App\Run;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Run::class, function (Faker $faker) {
-    return [
-        'audit_id' => function () {
-            return factory(Audit::class)->create()->id;
-        },
-    ];
-});
+class RunFactory extends Factory
+{
+    protected $model = Run::class;
+
+    public function definition()
+    {
+        return [
+            'audit_id' => function () {
+                return Audit::factory();
+            },
+        ];
+    }
+}
