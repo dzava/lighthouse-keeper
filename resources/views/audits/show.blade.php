@@ -1,18 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container mx-auto">
 
-        <div class="mt2 pt3 ph3">
-            <div class="ph3 black-70">{{ $audit->runCount }} {{ \Illuminate\Support\Str::plural('run', $audit->runCount) }} for</div>
-            <div class="ph3 f3 break-all">{{ $audit->name }}</div>
+        <div class="flex items-center mt-2 pt-3 px-3">
+            <div>
+                <div
+                    class="px-3 text-gray-700">{{ $audit->runCount }} {{ \Illuminate\Support\Str::plural('run', $audit->runCount) }}
+                    for
+                </div>
+                <div class="px-3 text-2xl break-all">{{ $audit->name }}</div>
+            </div>
+
+            <div class="ml-auto">
+                <form action="{{ route('runs.store') }}" method="POST" class="inline mr-3">
+                    @csrf
+                    <input type="hidden" name="audit" value="{{ $audit->id }}">
+                    <button class="p-2 mb-2 bg-white hover:bg-gray-100">Run</button>
+                </form>
+
+                <a class="inline-block p-2 mb-2 rounded hover:bg-gray-100"
+                   href="{{ route('audits.edit', $audit) }}">
+                    Edit
+                </a>
+            </div>
+
         </div>
 
-        <div class="mt3 pa3 h5 bg-white">
+        <div class="mt-3 md:px-3 py-3 h5 bg-white">
             <chart :labels="{{ json_encode($chart->labels) }}" :datasets="{{ json_encode($chart->datasets) }}"></chart>
         </div>
 
-        <div class="mt3 bg-white">
+        <div class="mt-3 bg-white">
 
             <table class="table">
                 <thead>
@@ -28,26 +47,26 @@
                 </thead>
                 <tbody>
                 @foreach($audit->runs as $run)
-                    <tr class="pa3">
+                    <tr>
                         <td data-label="Date">{{ $run->created_at }}</td>
-                        <td data-label="Performance" class="lh2">
-                            @include('_gauge', ['percentage' => $run->performance_score, 'class' => 'w2 h2'])
+                        <td data-label="Performance" class="leading-loose">
+                            @include('_gauge', ['percentage' => $run->performance_score, 'class' => 'w-8 h-8'])
                         </td>
-                        <td data-label="P.W.A" class="lh2">
-                            @include('_gauge', ['percentage' => $run->pwa_score, 'class' => 'w2 h2'])
+                        <td data-label="P.W.A" class="leading-loose">
+                            @include('_gauge', ['percentage' => $run->pwa_score, 'class' => 'w-8 h-8'])
                         </td>
-                        <td data-label="Accessibility" class="lh2">
-                            @include('_gauge', ['percentage' => $run->accessibility_score, 'class' => 'w2 h2'])
+                        <td data-label="Accessibility" class="leading-loose">
+                            @include('_gauge', ['percentage' => $run->accessibility_score, 'class' => 'w-8 h-8'])
                         </td>
-                        <td data-label="Best practices" class="nowrap lh2">
-                            @include('_gauge', ['percentage' => $run->best_practices_score, 'class' => 'w2 h2'])
+                        <td data-label="Best practices" class="nowrap leading-loose">
+                            @include('_gauge', ['percentage' => $run->best_practices_score, 'class' => 'w-8 h-8'])
                         </td>
-                        <td data-label="S.E.O" class="lh2">
-                            @include('_gauge', ['percentage' => $run->seo_score, 'class' => 'w2 h2'])
+                        <td data-label="S.E.O" class="leading-loose">
+                            @include('_gauge', ['percentage' => $run->seo_score, 'class' => 'w-8 h-8'])
                         </td>
 
-                        <td class="mt2 nowrap">
-                            <a href="{{ route('runs.show', $run) }}">View reports</a> ({{ $run->reportCount }})
+                        <td class="mt-4 nowrap">
+                            <a href="{{ route('runs.show', $run) }}">View reports ({{ $run->reportCount }})</a>
                         </td>
                     </tr>
                 @endforeach
@@ -57,13 +76,3 @@
     </div>
 @stop
 
-@push('fab-start')
-    <a class="fab-button fab-button--secondary" href="{{ route('audits.edit', $audit) }}">
-        Edit
-    </a>
-    <form action="{{ route('runs.store') }}" method="POST">
-        @csrf
-        <input type="hidden" name="audit" value="{{ $audit->id }}">
-        <button class="fab-button fab-button--secondary">Run now</button>
-    </form>
-@endpush

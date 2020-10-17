@@ -1,17 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="mt2 pt3 ph3 relative">
-            <div class="ph3 black-50">{{ $run->reportCount }} {{ \Illuminate\Support\Str::plural('report', $run->reportCount) }} for</div>
-            <div class="ph3 f3 break-all">
-                <a href="{{ route('audits.show', $run->audit) }}" class="link black-90">{{ $run->audit->name }}</a>
+    <div class="container mx-auto">
+        <div class="flex items-center mt-2 pt-3 px-3 mb-3">
+
+            <div>
+                <div
+                    class="px-3 text-gray-700">{{ $run->reportCount }} {{ \Illuminate\Support\Str::plural('report', $run->reportCount) }}
+                    for
+                </div>
+                <div class="px-3 text-2xl break-all">
+                    <a href="{{ route('audits.show', $run->audit) }}" class="text-gray-900">{{ $run->audit->name }}</a>
+                </div>
+                <div class="px-3 text-gray-700">on {{ $run->created_at }}</div>
             </div>
-            <div class="ph3 black-50">on {{ $run->created_at }}</div>
+
+            <div class="ml-auto">
+                <form action="{{ route('runs.store') }}" method="POST" class="inline mr-3">
+                    @csrf
+                    <input type="hidden" name="audit" value="{{ $run->audit->id }}">
+                    <button class="p-2 mb-2 bg-white hover:bg-gray-100">Run</button>
+                </form>
+
+                <a class="inline-block p-2 mb-2 rounded hover:bg-gray-100"
+                   href="{{ route('audits.edit', $run->audit) }}">
+                    Edit
+                </a>
+            </div>
+
         </div>
 
         @unless($run->successfulReports->isEmpty())
-            <div class="mt3 bg-white bt bw2 b--dark-green">
+            <div class="bg-white border-t-4 border-green-700">
                 <table class="table">
                     <thead>
                     <tr>
@@ -27,27 +47,27 @@
                     <tbody>
 
                     @foreach($run->successfulReports as $report)
-                        <tr class="pa3">
+                        <tr>
                             <td class="break-all" data-label="Url">
                                 <a class="link" href="{{ $report->url }}">{{ $report->url }}</a>
                             </td>
-                            <td data-label="Performance" class="lh2">
-                                @include('_gauge', ['percentage' => $report->performance_score, 'class' => 'w2 h2'])
+                            <td data-label="Performance" class="leading-loose">
+                                @include('_gauge', ['percentage' => $report->performance_score, 'class' => 'w-8 h-8'])
                             </td>
-                            <td data-label="P.W.A" class="lh2">
-                                @include('_gauge', ['percentage' => $report->pwa_score, 'class' => 'w2 h2'])
+                            <td data-label="P.W.A" class="leading-loose">
+                                @include('_gauge', ['percentage' => $report->pwa_score, 'class' => 'w-8 h-8'])
                             </td>
-                            <td data-label="Accessibility" class="lh2">
-                                @include('_gauge', ['percentage' => $report->accessibility_score, 'class' => 'w2 h2'])
+                            <td data-label="Accessibility" class="leading-loose">
+                                @include('_gauge', ['percentage' => $report->accessibility_score, 'class' => 'w-8 h-8'])
                             </td>
-                            <td data-label="Best practices" class="nowrap lh2">
-                                @include('_gauge', ['percentage' => $report->best_practices_score, 'class' => 'w2 h2'])
+                            <td data-label="Best practices" class="nowrap leading-loose">
+                                @include('_gauge', ['percentage' => $report->best_practices_score, 'class' => 'w-8 h-8'])
                             </td>
-                            <td data-label="S.E.O" class="lh2">
-                                @include('_gauge', ['percentage' => $report->seo_score, 'class' => 'w2 h2'])
+                            <td data-label="S.E.O" class="leading-loose">
+                                @include('_gauge', ['percentage' => $report->seo_score, 'class' => 'w-8 h-8'])
                             </td>
                             <td class="nowrap">
-                                <a href="{{ route('reports.show', $report) }}" class="link">
+                                <a href="{{ route('reports.show', $report) }}" class="">
                                     Open
                                 </a>
                             </td>
@@ -59,9 +79,9 @@
         @endunless
 
         @unless($run->failedReports->isEmpty())
-            <div class="mt5 bg-white bt bw2 b--dark-red">
+            <div class="mt-16 bg-white border-t-4 border-red-700">
 
-                <h2 class="pa2 tc">Failed reports</h2>
+                <h2 class="p-2 text-center">Failed reports</h2>
 
                 <table class="table">
                     <thead>
@@ -73,9 +93,9 @@
                     <tbody>
 
                     @foreach($run->failedReports as $report)
-                        <tr class="pa3">
+                        <tr>
                             <td data-label="Url">
-                                <a class="link" href="{{ $report->url }}">{{ $report->url }}</a>
+                                <a class="" href="{{ $report->url }}">{{ $report->url }}</a>
                             </td>
                             <td data-label="Reason" class="break-all">
                                 {{ $report->failure_reason }}
@@ -89,13 +109,3 @@
     </div>
 @stop
 
-@push('fab-start')
-    <a class="fab-button fab-button--secondary" href="{{ route('audits.show', $run->audit) }}">
-        {{ $run->audit->name }}
-    </a>
-    <form action="{{ route('runs.store') }}" method="POST">
-        @csrf
-        <input type="hidden" name="audit" value="{{ $run->audit->id }}">
-        <button class="fab-button fab-button--secondary">Run now</button>
-    </form>
-@endpush

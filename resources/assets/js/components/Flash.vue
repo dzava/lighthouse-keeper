@@ -2,7 +2,7 @@
 </style>
 
 <template>
-    <div class="fixed bottom-1 right-0 right-2-ns pa3 z-5" :class="classes" v-show="show">
+    <div class="fixed rounded shadow-xl top-0 right-0 mt-12 p-3 z-5" :class="classes" v-show="show">
         {{ body }}
     </div>
 </template>
@@ -26,9 +26,9 @@
                 show: false,
                 timeoutId: null,
                 classesForType: {
-                    info: 'bg-dark-blue white',
-                    success: 'bg-green white',
-                    error: 'bg-red white',
+                    info: 'bg-blue-600 text-white',
+                    success: 'bg-green-600 text-white',
+                    error: 'bg-red-600 text-white',
                 },
             }
         },
@@ -45,7 +45,7 @@
                 }
 
                 this.show = true
-                this.hide()
+                // this.hide()
             },
             hide() {
                 clearTimeout(this.timeoutId)

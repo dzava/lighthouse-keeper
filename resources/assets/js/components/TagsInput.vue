@@ -3,14 +3,14 @@
 
 <template>
     <div class="flex flex-wrap items-baseline">
-        <span class="flex items-center ba br2 b--dark-blue pa2 pr0 mr2 mb2 break-all" v-for="tag in tags">
+        <span class="flex items-center border rounded mb-2 mr-2 p-2 border-blue-400 break-all" v-for="tag in tags">
             <input type="hidden" :name="name" :value="tag">
             <span>{{ tag }}</span>
-            <button type="button" class="input-reset bn bg-transparent dark-blue ml1 pointer" @click="removeTag(tag)">&times;</button>
+            <button type="button" class="text-blue-800 ml-2" @click="removeTag(tag)">&times;</button>
         </span>
 
         <input type="hidden" :name="name" :value="newTag" v-if="newTag.length">
-        <input class="input w-auto flex-grow-1 bn" :type="type" :placeholder="placeholder" :required="isRequired"
+        <input class="input w-auto flex-grow" :type="type" :placeholder="placeholder" :required="isRequired"
                v-model="newTag" @keydown.enter.prevent="addTag()" ref="input">
     </div>
 </template>

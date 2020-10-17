@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mt4-ns container bg-white ph3-ns">
+    <div class="mt-4 container mx-auto bg-white md:px-3">
 
         <table class="table">
             <thead>
@@ -12,11 +12,11 @@
             </thead>
             <tbody>
             @foreach($audits as $audit)
-                <tr class="tc pa3">
-                    <td class="tl break-all">
-                        <a href="{{ route('audits.show', $audit) }}" class="link break-all">{{ $audit->name }}</a>
+                <tr class="p-3 text-center">
+                    <td class="break-all">
+                        <a href="{{ route('audits.show', $audit) }}" class="text-left break-all">{{ $audit->name }}</a>
                     </td>
-                    <td data-label="Last run" class="nowrap">
+                    <td data-label="Last run" class="">
                         @if($audit->latestRun)
                             <a href="{{ route('runs.show', $audit->latestRun) }}"
                                class="link break-all">{{ $audit->latestRun->created_at }}</a>

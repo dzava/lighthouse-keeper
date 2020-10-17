@@ -2,7 +2,7 @@
 </style>
 
 <template>
-    <canvas class="h5"></canvas>
+    <canvas style="height: 16rem;"></canvas>
 </template>
 
 <script>

@@ -11,7 +11,7 @@ if (!function_exists('get_color_for_score')) {
             return '';
         }
 
-        $color = $value >= 75 ? 'dark-green' : ($value >= 45 ? 'orange' : 'dark-red');
+        $color = $value >= 75 ? 'text-pass' : ($value >= 45 ? 'text-average' : 'text-fail');
 
         return "$prefix$color";
     }

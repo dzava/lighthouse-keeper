@@ -11,7 +11,8 @@
         ></path>
     @endif
 
-    <text text-anchor="middle" alignment-baseline="central" x="18" y="18" class="dark-gray">
+    <text text-anchor="middle" alignment-baseline="central" x="18" y="18"
+          class="{{ get_color_for_score($percentage) }}">
         {{ $percentage ?? '-'}}
     </text>
 </svg>

@@ -9,40 +9,43 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.9.1/css/tachyons.min.css"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     @stack('styles')
 </head>
-<body class="dark-gray bg-light-gray relative">
+<body class="text-gray-800 bg-gray-200 relative">
 
     <div id="app">
-        <main class="py-4">
+
+        <nav class="relative p-4 pb-0 container mx-auto flex flex-col md:flex-row md:items-center justify-between">
+            <div class="text-xl">
+                <a href="{{ route('audits') }}" class="no-underline text-gray-800">Lighthouse keeper</a>
+            </div>
+
+            <div class="md:flex flex-1 items-center">
+
+                <div class="relative group ml-auto flex">
+
+                    <a href="{{ route('audits.create') }}"
+                       class="md:px-4 px-2 py-4 block text-black no-underline hover:bg-gray-100">
+                        New audit
+                    </a>
+                    <a href="{{ route('audits.index') }}"
+                       class="md:px-4 px-2 py-4 block text-black no-underline hover:bg-gray-100">
+                        All audits
+                    </a>
+
+                </div>
+            </div>
+        </nav>
+
+        <main class="">
             @yield('content')
         </main>
-
-        <div class="fab">
-            <button class="fab-button fab-button--primary">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="black-90 w1 h1">
-                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" fill="white"></path>
-                </svg>
-            </button>
-
-            @stack('fab-start')
-            <a class="fab-button fab-button--secondary" href="{{ route('audits.create') }}">New Audit</a>
-            <a class="fab-button fab-button--secondary" href="{{ route('audits.index') }}">All Audits</a>
-        </div>
 
         <flash message="{{ session('flash') }}" level="{{ session('flash_level', 'info') }}"></flash>
     </div>
 
     <script src="{{ mix('js/app.js') }}"></script>
-    <script>
-        Array.from(document.querySelectorAll('.fab-button--primary')).forEach(el => {
-            const fab = el.closest('.fab')
-            el.addEventListener('click', () => {
-                fab.classList.toggle('is-expanded')
-            })
-        })
-    </script>
     @stack('scripts')
 </body>
 </html>

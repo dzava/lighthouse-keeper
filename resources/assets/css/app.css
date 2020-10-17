@@ -7,22 +7,6 @@
 }
 
 /*
- * Container
- */
-
-.container {
-    width: 100%;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-@media (min-width: 1200px) {
-    .container {
-        max-width: 1200px;
-    }
-}
-
-/*
  * Form
  */
 
@@ -51,14 +35,18 @@
     width: 100%;
 }
 
-.table tr:nth-child(even) {
-    background: rgba(0, 0, 0, .05);
+table tr {
+    border-bottom: 1px dashed #a1abba;
+}
+
+table th {
+    color: rgb(104 117 140);
 }
 
 .table th,
 .table td {
     text-align: center;
-    padding: 0.5rem;
+    padding: 1rem 0;
 }
 
 .table td.tl {
@@ -126,47 +114,18 @@
     stroke: none;
 }
 
-/*
- * FAB
- */
-.fab {
+.text-fail {
+    color: #ff4e42;
+}
+
+.text-pass {
+    color: #0cce6b;
+}
+
+.text-average {
+    color: #ffa400;
+}
+
+.group:hover .group-hover\:flex {
     display: flex;
-    flex-direction: column-reverse;
-    align-items: flex-end;
-    position: fixed;
-    right: 2rem;
-    bottom: 2rem;
-}
-
-.fab-button {
-    min-width: 3rem;
-    height: 3rem;
-    will-change: transform;
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    line-height: 3rem;
-    text-align: center;
-    text-decoration: none;
-    color: rgba(0, 0, 0, .9);
-}
-
-.fab-button--primary {
-    background: purple;
-    border-radius: 50%;
-}
-
-.fab-button--secondary {
-    display: none;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, .3);
-    padding: 0 .5rem;
-    margin: 0 0 1rem 0;
-    position: relative;
-}
-
-.fab.is-expanded .fab-button--secondary {
-    display: inline-block;
 }
