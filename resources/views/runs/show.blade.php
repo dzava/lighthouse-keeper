@@ -51,20 +51,20 @@
                             <td class="break-all" data-label="Url">
                                 <a class="link" href="{{ $report->url }}">{{ $report->url }}</a>
                             </td>
-                            <td data-label="Performance" class="leading-loose">
-                                @include('_gauge', ['percentage' => $report->performance_score, 'class' => 'w-8 h-8'])
+                            <td data-label="Performance" class="leading-loose relative">
+                                @include('_gauge', ['percentage' => $report->performance_score, 'class' => 'w-8 h-8', 'change' => $report->performance_score_change])
                             </td>
-                            <td data-label="P.W.A" class="leading-loose">
-                                @include('_gauge', ['percentage' => $report->pwa_score, 'class' => 'w-8 h-8'])
+                            <td data-label="P.W.A" class="leading-loose relative">
+                                @include('_gauge', ['percentage' => $report->pwa_score, 'class' => 'w-8 h-8', 'change' => $report->pwa_score_change])
                             </td>
-                            <td data-label="Accessibility" class="leading-loose">
-                                @include('_gauge', ['percentage' => $report->accessibility_score, 'class' => 'w-8 h-8'])
+                            <td data-label="Accessibility" class="leading-loose relative">
+                                @include('_gauge', ['percentage' => $report->accessibility_score, 'class' => 'w-8 h-8', 'change' => $report->accessibility_score_change])
                             </td>
-                            <td data-label="Best practices" class="nowrap leading-loose">
-                                @include('_gauge', ['percentage' => $report->best_practices_score, 'class' => 'w-8 h-8'])
+                            <td data-label="Best practices" class="nowrap leading-loose relative">
+                                @include('_gauge', ['percentage' => $report->best_practices_score, 'class' => 'w-8 h-8', 'change' => $report->best_practices_score_change])
                             </td>
-                            <td data-label="S.E.O" class="leading-loose">
-                                @include('_gauge', ['percentage' => $report->seo_score, 'class' => 'w-8 h-8'])
+                            <td data-label="S.E.O" class="leading-loose relative">
+                                @include('_gauge', ['percentage' => $report->seo_score, 'class' => 'w-8 h-8', 'change' => $report->seo_score_change])
                             </td>
                             <td class="nowrap">
                                 <a href="{{ route('reports.show', $report) }}" class="">

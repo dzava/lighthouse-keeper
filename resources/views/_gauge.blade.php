@@ -16,3 +16,8 @@
         {{ $percentage ?? '-'}}
     </text>
 </svg>
+
+@unless(empty($change))
+    <span
+        class="absolute {{ $change > 0 ? 'text-pass' : 'text-fail' }} font-black text-xs top-0">{{ sprintf("%+d",$change) }}</span>
+@endunless

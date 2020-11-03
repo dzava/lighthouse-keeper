@@ -48,6 +48,41 @@ class Report extends Model
         return $this->run->audit;
     }
 
+    public function getPerformanceScoreChangeAttribute()
+    {
+        return $this->change($this->previousReport, 'performance_score');
+    }
+
+    public function getPwaScoreChangeAttribute()
+    {
+        return $this->change($this->previousReport, 'pwa_score');
+    }
+
+    public function getAccessibilityScoreChangeAttribute()
+    {
+        return $this->change($this->previousReport, 'accessibility_score');
+    }
+
+    public function getBestPracticesScoreChangeAttribute()
+    {
+        return $this->change($this->previousReport, 'best_practices_score');
+    }
+
+    public function getSeoScoreChangeAttribute()
+    {
+        return $this->change($this->previousReport, 'seo_score');
+    }
+
+    public function previousReport()
+    {
+        $previousRuns = $this->audit->runs()->where('id', '<', $this->run_id)->select('id');
+
+        return $this->hasOne(Report::class, 'url', 'url')
+            ->whereIn('run_id', $previousRuns)
+            ->whereNull('failure_reason')
+            ->latest();
+    }
+
     /**
      * The Run this report belongs to
      *
@@ -56,5 +91,18 @@ class Report extends Model
     public function run()
     {
         return $this->belongsTo(Run::class);
+    }
+
+    protected function change($otherReport, $category)
+    {
+        if (is_null($otherReport)) {
+            return null;
+        }
+
+        if (is_null($this->$category) || is_null($otherReport->$category)) {
+            return null;
+        }
+
+        return $this->$category - $otherReport->$category;
     }
 }

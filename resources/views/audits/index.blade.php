@@ -14,7 +14,8 @@
             @foreach($audits as $audit)
                 <tr class="p-3 text-center">
                     <td class="break-all">
-                        <a href="{{ route('audits.show', $audit) }}" class="text-left break-all">{{ $audit->name }}</a>
+                        <a href="{{ route('audits.show', $audit) }}"
+                           class="text-left break-all"><b>{{ $audit->name }}</b></a>
                     </td>
                     <td data-label="Last run" class="">
                         @if($audit->latestRun)

@@ -49,20 +49,20 @@
                 @foreach($audit->runs as $run)
                     <tr>
                         <td data-label="Date">{{ $run->created_at }}</td>
-                        <td data-label="Performance" class="leading-loose">
-                            @include('_gauge', ['percentage' => $run->performance_score, 'class' => 'w-8 h-8'])
+                        <td data-label="Performance" class="leading-loose relative">
+                            @include('_gauge', ['percentage' => $run->performance_score, 'class' => 'w-8 h-8', 'change' => $run->performance_score_change])
                         </td>
-                        <td data-label="P.W.A" class="leading-loose">
-                            @include('_gauge', ['percentage' => $run->pwa_score, 'class' => 'w-8 h-8'])
+                        <td data-label="P.W.A" class="leading-loose relative">
+                            @include('_gauge', ['percentage' => $run->pwa_score, 'class' => 'w-8 h-8', 'change' => $run->pwa_score_change])
                         </td>
-                        <td data-label="Accessibility" class="leading-loose">
-                            @include('_gauge', ['percentage' => $run->accessibility_score, 'class' => 'w-8 h-8'])
+                        <td data-label="Accessibility" class="leading-loose relative">
+                            @include('_gauge', ['percentage' => $run->accessibility_score, 'class' => 'w-8 h-8', 'change' => $run->accessibility_score_change])
                         </td>
-                        <td data-label="Best practices" class="nowrap leading-loose">
-                            @include('_gauge', ['percentage' => $run->best_practices_score, 'class' => 'w-8 h-8'])
+                        <td data-label="Best practices" class="nowrap leading-loose relative">
+                            @include('_gauge', ['percentage' => $run->best_practices_score, 'class' => 'w-8 h-8', 'change' => $run->best_practices_score_change])
                         </td>
-                        <td data-label="S.E.O" class="leading-loose">
-                            @include('_gauge', ['percentage' => $run->seo_score, 'class' => 'w-8 h-8'])
+                        <td data-label="S.E.O" class="leading-loose relative">
+                            @include('_gauge', ['percentage' => $run->seo_score, 'class' => 'w-8 h-8', 'change' => $run->seo_score_change])
                         </td>
 
                         <td class="mt-4 nowrap">
