@@ -83,24 +83,29 @@
                 <div class="w-full ">
                     <label class="pr-2 pb-2 md:pb-0">
                         <input type="checkbox" name="webhook_enabled"
-                               value="seo" {{ old('seo', $audit->webhook_enabled) ? 'checked': '' }}> Enable
+                               onchange="document.getElementById('webhook-settings').classList.toggle('hidden', !this.checked)"
+                               value="seo" {{ old('webhook_enabled', $audit->webhook_enabled) ? 'checked': '' }}> Enable
                     </label>
 
-                    <div class="flex flex-col md:flex-row md:items-center mt-3">
-                        <label class="w-1/3 b mb-2 md:mb-0" for="webhook_branch">Branch:</label>
-                        <input type="text" name="webhook_branch" id="webhook_branch" class="input"
-                               value="{{ old('webhook_branch', $audit->webhook_branch) }}" required>
-                    </div>
+                    <div class="{{old('webhook_enabled', $audit->webhook_enabled) ? '': 'hidden'}}"
+                         id="webhook-settings">
+                        <div class="flex flex-col md:flex-row md:items-center mt-3">
+                            <label class="w-1/3 b mb-2 md:mb-0" for="webhook_branch">Branch:</label>
+                            <input type="text" name="webhook_branch" id="webhook_branch" class="input"
+                                   value="{{ old('webhook_branch', $audit->webhook_branch) }}" required>
+                        </div>
 
-                    <div class="flex flex-col md:flex-row md:items-center mt-3">
-                        <label class="w-1/3 b mb-2 md:mb-0" for="webhook_delay">Delay:</label>
-                        <input type="number" name="webhook_delay" id="webhook_delay" class="input"
-                               min="0" value="{{ old('webhook_delay', $audit->webhook_delay) }}" required>
-                    </div>
+                        <div class="flex flex-col md:flex-row md:items-center mt-3">
+                            <label class="w-1/3 b mb-2 md:mb-0" for="webhook_delay">Delay:</label>
+                            <input type="number" name="webhook_delay" id="webhook_delay" class="input"
+                                   min="0" value="{{ old('webhook_delay', $audit->webhook_delay) }}" required>
+                        </div>
 
-                    <div class="flex flex-col md:flex-row md:items-center mt-3">
-                        <label class="w-1/3-ns b mb-2 md:mb-0">Webhook url:</label>
-                        <input type="text" class="input bn bg-transparent" disabled value="{{ route('webhooks', $audit) }}">
+                        <div class="flex flex-col md:flex-row md:items-center mt-3">
+                            <label class="w-1/3 b mb-2 md:mb-0">Webhook url:</label>
+                            <input type="text" class="input bn bg-transparent" disabled
+                                   value="{{ route('webhooks', $audit) }}">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -110,7 +115,8 @@
                     <span class="b">Notifications</span>
                 </div>
                 <div class="w-full flex flex-col md:justify-between">
-                    <tags-input :data-tags="{{ json_encode($audit->notify_emails) }}" type="email" name="notify_emails[]"
+                    <tags-input :data-tags="{{ json_encode($audit->notify_emails) }}" type="email"
+                                name="notify_emails[]"
                                 placeholder="Add email ..."></tags-input>
                 </div>
             </div>
